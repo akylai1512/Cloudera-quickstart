@@ -1,0 +1,1707 @@
+[root@quickstart /]# touch join1_mapper.py
+[root@quickstart /]# touch join1_reducer.py
+[root@quickstart /]# vim join1_mapper.py
+[root@quickstart /]# vim join1_reducer.py
+[root@quickstart /]# chmod +x join1_mapper.py
+[root@quickstart /]# chmod +x join1_reducer.py
+[root@quickstart /]# echo "A long time ago in a galaxy far far away" > /home/cloudera/join1_FileA.txt
+[root@quickstart /]# echo "Another episode of Star Wars"                 > /home/cloudera/join1_FileB.txt
+[root@quickstart /]# cat join1_File*.txt | ./join1_mapper.py | sort | ./join1_reducer.py
+cat: join1_File*.txt: No such file or directory
+Traceback (most recent call last):
+  File "./join1_reducer.py", line 45, in <module>
+    if last_key == this_key:
+NameError: name 'this_key' is not defined
+[root@quickstart /]# hdfs dfs -rm -r /user/cloudera/output_new
+Deleted /user/cloudera/output_new
+[root@quickstart /]# hdfs dfs -rm -r /user/cloudera/input
+Deleted /user/cloudera/input
+[root@quickstart /]# hdfs dfs -mkdir /user/cloudera/input
+[root@quickstart /]# hdfs dfs -put /home/cloudera/join1_FileA /user/cloudera/input 
+put: `/home/cloudera/join1_FileA': No such file or directory
+[root@quickstart /]# hdfs dfs -put /home/cloudera/join1_FileA.txt /user/cloudera/input 
+[root@quickstart /]# hdfs dfs -put /home/cloudera/join1_FileB.txt /user/cloudera/input 
+[root@quickstart /]# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+>    -input /user/cloudera/input \
+>    -output /user/cloudera/output_join \   
+Found 1 unexpected arguments on the command line [ ]
+Try -help for more information
+Streaming Command Failed!
+[root@quickstart /]#    -mapper /join1_mapper.py \   
+bash: -mapper: command not found
+[root@quickstart /]# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+>    -input /user/cloudera/input \
+>    -output /user/cloudera/output_join \   
+Found 1 unexpected arguments on the command line [ ]
+Try -help for more information
+Streaming Command Failed!
+[root@quickstart /]#    -mapper /join1_mapper.py \   
+bash: -mapper: command not found
+[root@quickstart /]#    -reducer /join1_reducer.py
+bash: -reducer: command not found
+[root@quickstart /]# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+>    -input /user/cloudera/input \
+>    -output /user/cloudera/output_join \   
+Found 1 unexpected arguments on the command line [ ]
+Try -help for more information
+Streaming Command Failed!
+[root@quickstart /]#    -mapper /join1_mapper.py \   
+bash: -mapper: command not found
+[root@quickstart /]# ls -a
+.    boot        .dockerinit  home              lib         media  packer-files  sbin     sys  var                        .wordcount_num0_output.txt.crc
+..   dev         echo         join1_mapper.py   lib64       mnt    proc          selinux  tmp  wordcount_mapper.py        wordcount_reducer.py
+bin  .dockerenv  etc          join1_reducer.py  lost+found  opt    root          srv      usr  wordcount_num0_output.txt
+[root@quickstart /]# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+>    -input /user/cloudera/input \
+>    -output /user/cloudera/output_new \
+>    -mapper /join1_mapper.py \
+>    -reducer /join1_reducer.py
+packageJobJar: [] [/usr/jars/hadoop-streaming-2.6.0-cdh5.7.0.jar] /tmp/streamjob3050235810559563013.jar tmpDir=null
+22/02/20 14:55:49 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 14:55:49 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 14:55:49 INFO mapred.FileInputFormat: Total input paths to process : 2
+22/02/20 14:55:49 INFO mapreduce.JobSubmitter: number of splits:3
+22/02/20 14:55:49 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1645364657674_0007
+22/02/20 14:55:50 INFO impl.YarnClientImpl: Submitted application application_1645364657674_0007
+22/02/20 14:55:50 INFO mapreduce.Job: The url to track the job: http://quickstart.cloudera:8088/proxy/application_1645364657674_0007/
+22/02/20 14:55:50 INFO mapreduce.Job: Running job: job_1645364657674_0007
+22/02/20 14:55:55 INFO mapreduce.Job: Job job_1645364657674_0007 running in uber mode : false
+22/02/20 14:55:55 INFO mapreduce.Job:  map 0% reduce 0%
+22/02/20 14:55:59 INFO mapreduce.Job:  map 33% reduce 0%
+22/02/20 14:56:00 INFO mapreduce.Job:  map 67% reduce 0%
+22/02/20 14:56:01 INFO mapreduce.Job:  map 100% reduce 0%
+22/02/20 14:56:04 INFO mapreduce.Job:  map 100% reduce 100%
+22/02/20 14:56:04 INFO mapreduce.Job: Job job_1645364657674_0007 completed successfully
+22/02/20 14:56:04 INFO mapreduce.Job: Counters: 49
+	File System Counters
+		FILE: Number of bytes read=136
+		FILE: Number of bytes written=462745
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=433
+		HDFS: Number of bytes written=94
+		HDFS: Number of read operations=12
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=2
+	Job Counters 
+		Launched map tasks=3
+		Launched reduce tasks=1
+		Data-local map tasks=3
+		Total time spent by all maps in occupied slots (ms)=6450
+		Total time spent by all reduces in occupied slots (ms)=2213
+		Total time spent by all map tasks (ms)=6450
+		Total time spent by all reduce tasks (ms)=2213
+		Total vcore-seconds taken by all map tasks=6450
+		Total vcore-seconds taken by all reduce tasks=2213
+		Total megabyte-seconds taken by all map tasks=6604800
+		Total megabyte-seconds taken by all reduce tasks=2266112
+	Map-Reduce Framework
+		Map input records=2
+		Map output records=15
+		Map output bytes=100
+		Map output materialized bytes=148
+		Input split bytes=357
+		Combine input records=0
+		Combine output records=0
+		Reduce input groups=14
+		Reduce shuffle bytes=148
+		Reduce input records=15
+		Reduce output records=14
+		Spilled Records=30
+		Shuffled Maps =3
+		Failed Shuffles=0
+		Merged Map outputs=3
+		GC time elapsed (ms)=76
+		CPU time spent (ms)=1800
+		Physical memory (bytes) snapshot=872751104
+		Virtual memory (bytes) snapshot=5479383040
+		Total committed heap usage (bytes)=831520768
+	Shuffle Errors
+		BAD_ID=0
+		CONNECTION=0
+		IO_ERROR=0
+		WRONG_LENGTH=0
+		WRONG_MAP=0
+		WRONG_REDUCE=0
+	File Input Format Counters 
+		Bytes Read=76
+	File Output Format Counters 
+		Bytes Written=94
+22/02/20 14:56:04 INFO streaming.StreamJob: Output directory: /user/cloudera/output_new
+[root@quickstart /]# sh make_data_join2.txt
+sh: make_data_join2.txt: No such file or directory
+[root@quickstart /]# sh make_data_join2.txt
+sh: make_data_join2.txt: No such file or directory
+[root@quickstart /]# python make_join2data.py y 1000 13 > join2_gennumA.txt
+python: can't open file 'make_join2data.py': [Errno 2] No such file or directory
+[root@quickstart /]# hdfs dfs -mkdir /user/cloudera/input_join2
+[root@quickstart /]# sh make_data_join2.txt
+sh: make_data_join2.txt: No such file or directory
+[root@quickstart /]# touch make_data_join2.txt
+[root@quickstart /]# sh make_data_join2.txt
+[root@quickstart /]# cat make_data_join2.txt
+[root@quickstart /]# ls -a
+.     dev          etc               join2_gennumA.txt  make_data_join2.txt  packer-files  selinux  usr                        .wordcount_num0_output.txt.crc
+..    .dockerenv   home              lib                media                proc          srv      var                        wordcount_reducer.py
+bin   .dockerinit  join1_mapper.py   lib64              mnt                  root          sys      wordcount_mapper.py
+boot  echo         join1_reducer.py  lost+found         opt                  sbin          tmp      wordcount_num0_output.txt
+[root@quickstart /]# vim make_data_join2.txt
+[root@quickstart /]# sh python make_join2data.py y 1000 13 > join2_gennumA.txt
+/usr/bin/python: /usr/bin/python: cannot execute binary file
+[root@quickstart /]# python make_join2data.py y 2000 17 > join2_gennumB.txt
+python: can't open file 'make_join2data.py': [Errno 2] No such file or directory
+[root@quickstart /]# python make_join2data.py y 3000 19 > join2_gennumC.txt
+python: can't open file 'make_join2data.py': [Errno 2] No such file or directory
+[root@quickstart /]# python make_join2data.py n 100  23 > join2_genchanA.txt
+python: can't open file 'make_join2data.py': [Errno 2] No such file or directory
+[root@quickstart /]# python make_join2data.py n 200  19 > join2_genchanB.txt
+python: can't open file 'make_join2data.py': [Errno 2] No such file or directory
+[root@quickstart /]# python make_join2data.py n 300  37 > join2_genchanC.txt
+python: can't open file 'make_join2data.py': [Errno 2] No such file or directory
+[root@quickstart /]# sh make_data_join2.txt
+python: can't open file 'make_join2data.py': [Errno 2] No such file or directory
+python: can't open file 'make_join2data.py': [Errno 2] No such file or directory
+python: can't open file 'make_join2data.py': [Errno 2] No such file or directory
+python: can't open file 'make_join2data.py': [Errno 2] No such file or directory
+python: can't open file 'make_join2data.py': [Errno 2] No such file or directory
+python: can't open file 'make_join2data.py': [Errno 2] No such file or directory
+[root@quickstart /]# ls -a
+.     .dockerenv   join1_mapper.py     join2_gennumA.txt  lost+found           packer-files  srv  wordcount_mapper.py
+..    .dockerinit  join1_reducer.py    join2_gennumB.txt  make_data_join2.txt  proc          sys  wordcount_num0_output.txt
+bin   echo         join2_genchanA.txt  join2_gennumC.txt  media                root          tmp  .wordcount_num0_output.txt.crc
+boot  etc          join2_genchanB.txt  lib                mnt                  sbin          usr  wordcount_reducer.py
+dev   home         join2_genchanC.txt  lib64              opt                  selinux       var
+[root@quickstart /]# cat join2_genchanA.txt
+[root@quickstart /]# vim join2_gennumA.txt
+[root@quickstart /]# vim join2_gennumB.txt
+[root@quickstart /]# vim join2_gennumC.txt
+[root@quickstart /]# vim join2_genchanA.txt
+[root@quickstart /]# vim join2_genchanB.txt
+[root@quickstart /]# vim join2_genchanC.txt
+[root@quickstart /]# vim join2_gennumA.txt
+[root@quickstart /]#  vim join2_gennumB.txt
+[root@quickstart /]# vim join2_gennumC.txt
+[root@quickstart /]# vim join2_genchanA.txt
+[root@quickstart /]# vim join2_genchanB.tx
+[root@quickstart /]# vim join2_genchanB.tx
+[root@quickstart /]# vim join2_genchanC.txt
+[root@quickstart /]# ls -a
+.     dev          etc               join2_genchanA.txt  join2_gennumA.txt  lib64                mnt           root     sys  wordcount_mapper.py
+..    .dockerenv   home              join2_genchanB.tx   join2_gennumB.txt  lost+found           opt           sbin     tmp  wordcount_num0_output.txt
+bin   .dockerinit  join1_mapper.py   join2_genchanB.txt  join2_gennumC.txt  make_data_join2.txt  packer-files  selinux  usr  .wordcount_num0_output.txt.crc
+boot  echo         join1_reducer.py  join2_genchanC.txt  lib                media                proc          srv      var  wordcount_reducer.py
+[root@quickstart /]# vim join1_mapper.py
+[root@quickstart /]# rm join1_mapper.py
+rm: remove regular file `join1_mapper.py'? yes
+[root@quickstart /]# touch join1_mapper.py
+[root@quickstart /]# vim join1_mapper.py
+[root@quickstart /]# chmod +x join1_mapper.py 
+[root@quickstart /]# rm join1_reducer.py
+rm: remove regular file `join1_reducer.py'? yes
+[root@quickstart /]# touch join1_reducer.py
+[root@quickstart /]# vim join1_reducer.py
+[root@quickstart /]# chmod +x join1_reducer.py
+[root@quickstart /]# rm /home/cloudera/join1_FileA.txt
+rm: remove regular file `/home/cloudera/join1_FileA.txt'? yes
+[root@quickstart /]# touch /home/cloudera/join1_FileA.txt
+[root@quickstart /]# vim /home/cloudera/join1_FileA.txt
+[root@quickstart /]# rm /home/cloudera/join1_FileB.txt
+rm: remove regular file `/home/cloudera/join1_FileB.txt'? yes
+[root@quickstart /]# touch /home/cloudera/join1_FileB.txt
+[root@quickstart /]# vim /home/cloudera/join1_FileB.txt
+[root@quickstart /]# hdfs dfs -put /home/cloudera/testfile1 /user/cloudera/input 
+[root@quickstart /]# 
+[root@quickstart /]# hdfs dfs -put /home/cloudera/join1_FileA.txt /user/cloudera/input
+put: `/user/cloudera/input/join1_FileA.txt': File exists
+[root@quickstart /]# hdfs dfs -rm /user/cloudera/input/join1_FileA.txt
+Deleted /user/cloudera/input/join1_FileA.txt
+[root@quickstart /]# hdfs dfs -rm /user/cloudera/input/join1_FileB.txt
+Deleted /user/cloudera/input/join1_FileB.txt
+[root@quickstart /]# hdfs dfs -ls /user/cloudera/input
+Found 1 items
+-rw-r--r--   1 root cloudera         41 2022-02-20 15:52 /user/cloudera/input/testfile1
+[root@quickstart /]# hdfs dfs -rm /user/cloudera/input/testfile1
+Deleted /user/cloudera/input/testfile1
+[root@quickstart /]# hdfs dfs -put /home/cloudera/join1_FileA.txt /user/cloudera/input
+[root@quickstart /]# hdfs dfs -put /home/cloudera/join1_FileB.txt /user/cloudera/input
+[root@quickstart /]# ls -a
+.     dev          etc               join2_genchanA.txt  join2_gennumA.txt  lib64                mnt           root     sys  wordcount_mapper.py
+..    .dockerenv   home              join2_genchanB.tx   join2_gennumB.txt  lost+found           opt           sbin     tmp  wordcount_num0_output.txt
+bin   .dockerinit  join1_mapper.py   join2_genchanB.txt  join2_gennumC.txt  make_data_join2.txt  packer-files  selinux  usr  .wordcount_num0_output.txt.crc
+boot  echo         join1_reducer.py  join2_genchanC.txt  lib                media                proc          srv      var  wordcount_reducer.py
+[root@quickstart /]# touch make_join2data.py
+[root@quickstart /]# vim touch make_join2data.py
+2 files to edit
+[root@quickstart /]# vim touch make_join2data.py
+2 files to edit
+[root@quickstart /]# rm join2_genchanB.tx
+rm: remove regular file `join2_genchanB.tx'? yes 
+[root@quickstart /]# rm join2_genchanA.tx
+rm: cannot remove `join2_genchanA.tx': No such file or directory
+[root@quickstart /]# rm join2_genchanC.tx
+rm: cannot remove `join2_genchanC.tx': No such file or directory
+[root@quickstart /]# rm join2_genchanC.txt
+rm: remove regular file `join2_genchanC.txt'? yes
+[root@quickstart /]# rm join2_genchanA.txt
+rm: remove regular file `join2_genchanA.txt'? yes
+[root@quickstart /]# rm join2_gennumA.txt
+rm: remove regular file `join2_gennumA.txt'? yes
+[root@quickstart /]# rm join2_gennumB.txt
+rm: remove regular file `join2_gennumB.txt'? yes
+[root@quickstart /]# rm join2_gennumC.txt
+rm: remove regular file `join2_gennumC.txt'? yes
+[root@quickstart /]# sh make_data_join2.txt
+[root@quickstart /]# ls -a
+.     .dockerenv   join1_mapper.py     join2_gennumA.txt  lost+found           opt           selinux  usr                             wordcount_reducer.py
+..    .dockerinit  join1_reducer.py    join2_gennumB.txt  make_data_join2.txt  packer-files  srv      var
+bin   echo         join2_genchanA.txt  join2_gennumC.txt  make_join2data.py    proc          sys      wordcount_mapper.py
+boot  etc          join2_genchanB.txt  lib                media                root          tmp      wordcount_num0_output.txt
+dev   home         join2_genchanC.txt  lib64              mnt                  sbin          touch    .wordcount_num0_output.txt.crc
+[root@quickstart /]# cat join2_genchanB.txt
+[root@quickstart /]# cat 
+make_data_join2
+make_data_join2
+
+
+
+
+
+
+
+
+^[
+
+Q
+:Q
+Q!
+Q!
+done
+done
+exit
+exit
+join2_genchanB.txt
+join2_genchanB.txt
+^C
+[root@quickstart /]# cat make_data_join2.txt
+
+python make_join2data.py y 1000 13 > join2_gennumA.txt
+python make_join2data.py y 2000 17 > join2_gennumB.txt
+python make_join2data.py y 3000 19 > join2_gennumC.txt
+python make_join2data.py n 100  23 > join2_genchanA.txt
+python make_join2data.py n 200  19 > join2_genchanB.txt
+python make_join2data.py n 300  37 > join2_genchanC.txt
+[root@quickstart /]# cat make_data_join2.txt
+
+python make_join2data.py y 1000 13 > join2_gennumA.txt
+python make_join2data.py y 2000 17 > join2_gennumB.txt
+python make_join2data.py y 3000 19 > join2_gennumC.txt
+python make_join2data.py n 100  23 > join2_genchanA.txt
+python make_join2data.py n 200  19 > join2_genchanB.txt
+python make_join2data.py n 300  37 > join2_genchanC.txt
+[root@quickstart /]# cat make_join2data.py
+[root@quickstart /]# vim make_join2data.py
+[root@quickstart /]# cat make_join2data.py
+#!/usr/bin/env python
+import sys
+
+# --------------------------------------------------------------------------
+#  (make_join2data.py) Generate a random combination of titles and viewer counts, or channels
+# this is a simple version of a congruential generator, 
+#   not a great random generator but enough  
+# --------------------------------------------------------------------------
+
+chans   = ['ABC','DEF','CNO','NOX','YES','CAB','BAT','MAN','ZOO','XYZ','BOB']
+sh1 =['Hot','Almost','Hourly','PostModern','Baked','Dumb','Cold','Surreal','Loud']
+sh2 =['News','Show','Cooking','Sports','Games','Talking','Talking']
+vwr =range(17,1053)
+
+chvnm=sys.argv[1]  #get number argument, if its n, do numbers not channels,
+
+lch=len(chans)
+lsh1=len(sh1)
+lsh2=len(sh2)
+lvwr=len(vwr)
+ci=1
+s1=2
+s2=3
+vwi=4
+ri=int(sys.argv[3])
+for i in range(0,int(sys.argv[2])):  #arg 2 is the number of lines to output
+
+    if chvnm=='n':  #no numuber
+        print('{0}_{1},{2}'.format(sh1[s1],sh2[s2],chans[ci]))
+    else:
+        print('{0}_{1},{2}'.format(sh1[s1],sh2[s2],vwr[vwi])) 
+    ci=(5*ci+ri) % lch   
+    s1=(4*s1+ri) % lsh1
+    s2=(3*s1+ri+i) % lsh2
+    vwi=(2*vwi+ri+i) % lvwr
+ 
+    if (vwi==4): vwi=5
+[root@quickstart /]# ls -a
+.     .dockerenv   join1_mapper.py     join2_gennumA.txt  lost+found           opt           selinux  usr                             wordcount_reducer.py
+..    .dockerinit  join1_reducer.py    join2_gennumB.txt  make_data_join2.txt  packer-files  srv      var
+bin   echo         join2_genchanA.txt  join2_gennumC.txt  make_join2data.py    proc          sys      wordcount_mapper.py
+boot  etc          join2_genchanB.txt  lib                media                root          tmp      wordcount_num0_output.txt
+dev   home         join2_genchanC.txt  lib64              mnt                  sbin          touch    .wordcount_num0_output.txt.crc
+[root@quickstart /]# rm -r join2_genchanA.txt
+rm: remove regular empty file `join2_genchanA.txt'? yes
+[root@quickstart /]# rm -rf join2_genchanB.txt
+[root@quickstart /]# ls -a
+.     .dockerenv   join1_mapper.py     join2_gennumC.txt    make_join2data.py  proc     sys    wordcount_mapper.py
+..    .dockerinit  join1_reducer.py    lib                  media              root     tmp    wordcount_num0_output.txt
+bin   echo         join2_genchanC.txt  lib64                mnt                sbin     touch  .wordcount_num0_output.txt.crc
+boot  etc          join2_gennumA.txt   lost+found           opt                selinux  usr    wordcount_reducer.py
+dev   home         join2_gennumB.txt   make_data_join2.txt  packer-files       srv      var
+[root@quickstart /]# rm -rf join2_genchanC.txt
+[root@quickstart /]# rm -rf join2_gennumA.txt
+[root@quickstart /]# rm -rf join2_gennumB.txt
+[root@quickstart /]# rm -rf join2_gennumC.txt
+[root@quickstart /]# sh make_data_join2.txt
+[root@quickstart /]# ls -a
+.     .dockerenv   join1_mapper.py     join2_gennumA.txt  lost+found           opt           selinux  usr                             wordcount_reducer.py
+..    .dockerinit  join1_reducer.py    join2_gennumB.txt  make_data_join2.txt  packer-files  srv      var
+bin   echo         join2_genchanA.txt  join2_gennumC.txt  make_join2data.py    proc          sys      wordcount_mapper.py
+boot  etc          join2_genchanB.txt  lib                media                root          tmp      wordcount_num0_output.txt
+dev   home         join2_genchanC.txt  lib64              mnt                  sbin          touch    .wordcount_num0_output.txt.crc
+[root@quickstart /]# cat join2_genchanA.txt
+Hourly_Sports,DEF
+Baked_News,BAT
+PostModern_Talking,XYZ
+Loud_News,CNO
+Almost_Show,ABC
+Hot_Talking,DEF
+Dumb_Show,BAT
+Surreal_Show,XYZ
+Cold_Talking,CNO
+Hourly_Cooking,ABC
+Baked_Cooking,DEF
+PostModern_News,BAT
+Loud_Cooking,XYZ
+Almost_Sports,CNO
+Hot_Show,ABC
+Dumb_Sports,DEF
+Surreal_Sports,BAT
+Cold_Show,XYZ
+Hourly_Games,CNO
+Baked_Games,ABC
+PostModern_Cooking,DEF
+Loud_Games,BAT
+Almost_Talking,XYZ
+Hot_Sports,CNO
+Dumb_Talking,ABC
+Surreal_Talking,DEF
+Cold_Sports,BAT
+Hourly_Talking,XYZ
+Baked_Talking,CNO
+PostModern_Games,ABC
+Loud_Talking,DEF
+Almost_News,BAT
+Hot_Talking,XYZ
+Dumb_News,CNO
+Surreal_News,ABC
+Cold_Talking,DEF
+Hourly_Show,BAT
+Baked_Show,XYZ
+PostModern_Talking,CNO
+Loud_Show,ABC
+Almost_Cooking,DEF
+Hot_News,BAT
+Dumb_Cooking,XYZ
+Surreal_Cooking,CNO
+Cold_News,ABC
+Hourly_Sports,DEF
+Baked_Sports,BAT
+PostModern_Show,XYZ
+Loud_Sports,CNO
+Almost_Games,ABC
+Hot_Cooking,DEF
+Dumb_Games,BAT
+Surreal_Games,XYZ
+Cold_Cooking,CNO
+Hourly_Talking,ABC
+Baked_Talking,DEF
+PostModern_Sports,BAT
+Loud_Talking,XYZ
+Almost_Talking,CNO
+Hot_Games,ABC
+Dumb_Talking,DEF
+Surreal_Talking,BAT
+Cold_Games,XYZ
+Hourly_News,CNO
+Baked_News,ABC
+PostModern_Talking,DEF
+Loud_News,BAT
+Almost_Show,XYZ
+Hot_Talking,CNO
+Dumb_Show,ABC
+Surreal_Show,DEF
+Cold_Talking,BAT
+Hourly_Cooking,XYZ
+Baked_Cooking,CNO
+PostModern_News,ABC
+Loud_Cooking,DEF
+Almost_Sports,BAT
+Hot_Show,XYZ
+Dumb_Sports,CNO
+Surreal_Sports,ABC
+Cold_Show,DEF
+Hourly_Games,BAT
+Baked_Games,XYZ
+PostModern_Cooking,CNO
+Loud_Games,ABC
+Almost_Talking,DEF
+Hot_Sports,BAT
+Dumb_Talking,XYZ
+Surreal_Talking,CNO
+Cold_Sports,ABC
+Hourly_Talking,DEF
+Baked_Talking,BAT
+PostModern_Games,XYZ
+Loud_Talking,CNO
+Almost_News,ABC
+Hot_Talking,DEF
+Dumb_News,BAT
+Surreal_News,XYZ
+Cold_Talking,CNO
+Hourly_Show,ABC
+[root@quickstart /]# ls -a
+.     .dockerenv   join1_mapper.py     join2_gennumA.txt  lost+found           opt           selinux  usr                             wordcount_reducer.py
+..    .dockerinit  join1_reducer.py    join2_gennumB.txt  make_data_join2.txt  packer-files  srv      var
+bin   echo         join2_genchanA.txt  join2_gennumC.txt  make_join2data.py    proc          sys      wordcount_mapper.py
+boot  etc          join2_genchanB.txt  lib                media                root          tmp      wordcount_num0_output.txt
+dev   home         join2_genchanC.txt  lib64              mnt                  sbin          touch    .wordcount_num0_output.txt.crc
+[root@quickstart /]# hdfs dfs -put join2*.txt /user/cloudera/input_join2 
+[root@quickstart /]# ls -a
+.     .dockerenv   join1_mapper.py     join2_gennumA.txt  lost+found           opt           selinux  usr                             wordcount_reducer.py
+..    .dockerinit  join1_reducer.py    join2_gennumB.txt  make_data_join2.txt  packer-files  srv      var
+bin   echo         join2_genchanA.txt  join2_gennumC.txt  make_join2data.py    proc          sys      wordcount_mapper.py
+boot  etc          join2_genchanB.txt  lib                media                root          tmp      wordcount_num0_output.txt
+dev   home         join2_genchanC.txt  lib64              mnt                  sbin          touch    .wordcount_num0_output.txt.crc
+[root@quickstart /]# hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-2.6.3.jar -input /user/cloudera/input_join3 -output /user/cloudera/output_join2 -mapper ./join2_mapper.py -reducer ./join2_reducer.py
+Not a valid JAR: /share/hadoop/tools/lib/hadoop-streaming-2.6.3.jar
+[root@quickstart /]# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+> -input /user/cloudera/input_join3 \ 
+Required argument: -output 
+Try -help for more information
+Streaming Command Failed!
+[root@quickstart /]# -output /user/cloudera/output_join2 \
+> -mapper ./join1_mapper.py \
+> -reducer ./join1_reducer.py
+bash: -output: command not found
+[root@quickstart /]# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+> -input /user/cloudera/input_join2 \ 
+Required argument: -output 
+Try -help for more information
+Streaming Command Failed!
+[root@quickstart /]# -output /user/cloudera/output_join2 \
+> -mapper /join1_mapper.py \
+> -reducer /join1_reducer.py
+bash: -output: command not found
+[root@quickstart /]# hdfs dfs -ls /user/cloudera/output_join2 
+ls: `/user/cloudera/output_join2': No such file or directory
+[root@quickstart /]# hdfs dfs -ls /user/cloudera/input_join2 
+Found 6 items
+-rw-r--r--   1 root cloudera       1714 2022-02-20 16:16 /user/cloudera/input_join2/join2_genchanA.txt
+-rw-r--r--   1 root cloudera       3430 2022-02-20 16:16 /user/cloudera/input_join2/join2_genchanB.txt
+-rw-r--r--   1 root cloudera       5152 2022-02-20 16:16 /user/cloudera/input_join2/join2_genchanC.txt
+-rw-r--r--   1 root cloudera      17114 2022-02-20 16:16 /user/cloudera/input_join2/join2_gennumA.txt
+-rw-r--r--   1 root cloudera      34245 2022-02-20 16:16 /user/cloudera/input_join2/join2_gennumB.txt
+-rw-r--r--   1 root cloudera      51400 2022-02-20 16:16 /user/cloudera/input_join2/join2_gennumC.txt
+[root@quickstart /]# ls -a
+.     .dockerenv   join1_mapper.py     join2_gennumA.txt  lost+found           opt           selinux  usr                             wordcount_reducer.py
+..    .dockerinit  join1_reducer.py    join2_gennumB.txt  make_data_join2.txt  packer-files  srv      var
+bin   echo         join2_genchanA.txt  join2_gennumC.txt  make_join2data.py    proc          sys      wordcount_mapper.py
+boot  etc          join2_genchanB.txt  lib                media                root          tmp      wordcount_num0_output.txt
+dev   home         join2_genchanC.txt  lib64              mnt                  sbin          touch    .wordcount_num0_output.txt.crc
+[root@quickstart /]# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+>  -input /user/cloudera/input_join2 \ 
+Required argument: -output 
+Try -help for more information
+Streaming Command Failed!
+[root@quickstart /]# -output /user/cloudera/output_join2\
+> -mapper /join1_mapper.py \
+> -reducer /join1_reducer.py
+bash: -output: command not found
+[root@quickstart /]# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+>  -input /user/cloudera/input_join2\ 
+Required argument: -output 
+Try -help for more information
+Streaming Command Failed!
+[root@quickstart /]# -output /user/cloudera/output_join2\
+> -mapper /join1_mapper.py \
+> -reducer /join1_reducer.py
+bash: -output: command not found
+[root@quickstart /]# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+>    -input /user/cloudera/input_join2 \
+>    -output /user/cloudera/output_join2 \   
+Found 1 unexpected arguments on the command line [ ]
+Try -help for more information
+Streaming Command Failed!
+[root@quickstart /]#    -mapper /join1_mapper.py \   
+bash: -mapper: command not found
+[root@quickstart /]#    -reducer /join1_reducer.py
+bash: -reducer: command not found
+[root@quickstart /]# hdfs dfs /user/cloudera/
+/user/cloudera/: Unknown command
+[root@quickstart /]# hdfs dfs -ls /user/cloudera/output
+ls: `/user/cloudera/output': No such file or directory
+[root@quickstart /]# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+>    -input /user/cloudera/input_join2 \
+>    -output /user/cloudera/output \   
+Found 1 unexpected arguments on the command line [ ]
+Try -help for more information
+Streaming Command Failed!
+[root@quickstart /]#    -mapper /join1_mapper.py \   
+bash: -mapper: command not found
+[root@quickstart /]# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar -input /user/cloudera/input_join2    -output /user/cloudera/output -mapper /join1_mapper.py -reducer /join1_reducer.py
+packageJobJar: [] [/usr/jars/hadoop-streaming-2.6.0-cdh5.7.0.jar] /tmp/streamjob8470044181052823685.jar tmpDir=null
+22/02/20 16:31:35 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 16:31:35 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 16:31:35 INFO mapred.FileInputFormat: Total input paths to process : 6
+22/02/20 16:31:35 INFO mapreduce.JobSubmitter: number of splits:6
+22/02/20 16:31:35 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1645364657674_0008
+22/02/20 16:31:36 INFO impl.YarnClientImpl: Submitted application application_1645364657674_0008
+22/02/20 16:31:36 INFO mapreduce.Job: The url to track the job: http://quickstart.cloudera:8088/proxy/application_1645364657674_0008/
+22/02/20 16:31:36 INFO mapreduce.Job: Running job: job_1645364657674_0008
+22/02/20 16:31:41 INFO mapreduce.Job: Job job_1645364657674_0008 running in uber mode : false
+22/02/20 16:31:41 INFO mapreduce.Job:  map 0% reduce 0%
+22/02/20 16:31:45 INFO mapreduce.Job:  map 17% reduce 0%
+22/02/20 16:31:47 INFO mapreduce.Job:  map 33% reduce 0%
+22/02/20 16:31:48 INFO mapreduce.Job:  map 67% reduce 0%
+22/02/20 16:31:49 INFO mapreduce.Job:  map 83% reduce 0%
+22/02/20 16:31:51 INFO mapreduce.Job:  map 100% reduce 0%
+22/02/20 16:31:52 INFO mapreduce.Job:  map 100% reduce 100%
+22/02/20 16:31:53 INFO mapreduce.Job: Job job_1645364657674_0008 completed successfully
+22/02/20 16:31:53 INFO mapreduce.Job: Counters: 49
+	File System Counters
+		FILE: Number of bytes read=126261
+		FILE: Number of bytes written=1061917
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=113820
+		HDFS: Number of bytes written=0
+		HDFS: Number of read operations=21
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=2
+	Job Counters 
+		Launched map tasks=6
+		Launched reduce tasks=1
+		Data-local map tasks=6
+		Total time spent by all maps in occupied slots (ms)=13758
+		Total time spent by all reduces in occupied slots (ms)=4322
+		Total time spent by all map tasks (ms)=13758
+		Total time spent by all reduce tasks (ms)=4322
+		Total vcore-seconds taken by all map tasks=13758
+		Total vcore-seconds taken by all reduce tasks=4322
+		Total megabyte-seconds taken by all map tasks=14088192
+		Total megabyte-seconds taken by all reduce tasks=4425728
+	Map-Reduce Framework
+		Map input records=6600
+		Map output records=6600
+		Map output bytes=113055
+		Map output materialized bytes=126291
+		Input split bytes=765
+		Combine input records=0
+		Combine output records=0
+		Reduce input groups=54
+		Reduce shuffle bytes=126291
+		Reduce input records=6600
+		Reduce output records=0
+		Spilled Records=13200
+		Shuffled Maps =6
+		Failed Shuffles=0
+		Merged Map outputs=6
+		GC time elapsed (ms)=183
+		CPU time spent (ms)=3510
+		Physical memory (bytes) snapshot=1642446848
+		Virtual memory (bytes) snapshot=9609723904
+		Total committed heap usage (bytes)=1610088448
+	Shuffle Errors
+		BAD_ID=0
+		CONNECTION=0
+		IO_ERROR=0
+		WRONG_LENGTH=0
+		WRONG_MAP=0
+		WRONG_REDUCE=0
+	File Input Format Counters 
+		Bytes Read=113055
+	File Output Format Counters 
+		Bytes Written=0
+22/02/20 16:31:53 INFO streaming.StreamJob: Output directory: /user/cloudera/output
+[root@quickstart /]# hdfs dfs -cat /user/cloudera/output
+cat: `/user/cloudera/output': Is a directory
+[root@quickstart /]# hdfs dfs -ls /user/cloudera/output
+Found 2 items
+-rw-r--r--   1 root cloudera          0 2022-02-20 16:31 /user/cloudera/output/_SUCCESS
+-rw-r--r--   1 root cloudera          0 2022-02-20 16:31 /user/cloudera/output/part-00000
+[root@quickstart /]# hdfs dfs -cat /user/cloudera/output/part-00000
+[root@quickstart /]# hdfs dfs -ls /user/cloudera/output/..
+Found 6 items
+drwxr-xr-x   - root cloudera          0 2022-02-20 15:54 /user/cloudera/input
+drwxr-xr-x   - root cloudera          0 2022-02-20 16:16 /user/cloudera/input_join2
+drwxr-xr-x   - root cloudera          0 2022-02-20 16:31 /user/cloudera/output
+drwxr-xr-x   - root cloudera          0 2022-02-20 14:56 /user/cloudera/output_new
+drwxr-xr-x   - root cloudera          0 2022-02-20 14:24 /user/cloudera/output_new_0
+drwxr-xr-x   - root cloudera          0 2022-02-20 14:37 /user/cloudera/output_new_1
+[root@quickstart /]# hadoop fs -ls /user/cloudera/output/part-00000 
+-rw-r--r--   1 root cloudera          0 2022-02-20 16:31 /user/cloudera/output/part-00000
+[root@quickstart /]# hadoop fs -ls /user/cloudera/output/part-00000 ./ 
+-rw-r--r--   1 root cloudera          0 2022-02-20 16:31 /user/cloudera/output/part-00000
+[root@quickstart /]# ls -a
+.     .dockerenv   join1_mapper.py     join2_gennumA.txt  lost+found           opt           selinux  usr                             wordcount_reducer.py
+..    .dockerinit  join1_reducer.py    join2_gennumB.txt  make_data_join2.txt  packer-files  srv      var
+bin   echo         join2_genchanA.txt  join2_gennumC.txt  make_join2data.py    proc          sys      wordcount_mapper.py
+boot  etc          join2_genchanB.txt  lib                media                root          tmp      wordcount_num0_output.txt
+dev   home         join2_genchanC.txt  lib64              mnt                  sbin          touch    .wordcount_num0_output.txt.crc
+[root@quickstart /]# touch join2_mapper.py
+[root@quickstart /]# vim join2_mapper.py
+[root@quickstart /]# touch join2_reducer.py
+[root@quickstart /]# vim join2_reducer.py
+[root@quickstart /]# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar -input /user/cloudera/input_join2 -output /user/cloudera/output_join2 -mapper /join2_mapper.py -reducer /join2_reducer.py
+packageJobJar: [] [/usr/jars/hadoop-streaming-2.6.0-cdh5.7.0.jar] /tmp/streamjob3425410412303280208.jar tmpDir=null
+22/02/20 16:51:43 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 16:51:43 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 16:51:44 INFO mapred.FileInputFormat: Total input paths to process : 6
+22/02/20 16:51:44 INFO mapreduce.JobSubmitter: number of splits:6
+22/02/20 16:51:44 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1645364657674_0009
+22/02/20 16:51:44 INFO impl.YarnClientImpl: Submitted application application_1645364657674_0009
+22/02/20 16:51:44 INFO mapreduce.Job: The url to track the job: http://quickstart.cloudera:8088/proxy/application_1645364657674_0009/
+22/02/20 16:51:44 INFO mapreduce.Job: Running job: job_1645364657674_0009
+22/02/20 16:51:49 INFO mapreduce.Job: Job job_1645364657674_0009 running in uber mode : false
+22/02/20 16:51:49 INFO mapreduce.Job:  map 0% reduce 0%
+22/02/20 16:51:52 INFO mapreduce.Job: Task Id : attempt_1645364657674_0009_m_000000_0, Status : FAILED
+Error: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:449)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 9 more
+Caused by: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapRunner.configure(MapRunner.java:38)
+	... 14 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 17 more
+Caused by: java.lang.RuntimeException: configuration exception
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:221)
+	at org.apache.hadoop.streaming.PipeMapper.configure(PipeMapper.java:66)
+	... 22 more
+Caused by: java.io.IOException: Cannot run program "/join2_mapper.py": error=13, Permission denied
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1047)
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:208)
+	... 23 more
+Caused by: java.io.IOException: error=13, Permission denied
+	at java.lang.UNIXProcess.forkAndExec(Native Method)
+	at java.lang.UNIXProcess.<init>(UNIXProcess.java:186)
+	at java.lang.ProcessImpl.start(ProcessImpl.java:130)
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1028)
+	... 24 more
+
+22/02/20 16:51:53 INFO mapreduce.Job: Task Id : attempt_1645364657674_0009_m_000001_0, Status : FAILED
+Error: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:449)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 9 more
+Caused by: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapRunner.configure(MapRunner.java:38)
+	... 14 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 17 more
+Caused by: java.lang.RuntimeException: configuration exception
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:221)
+	at org.apache.hadoop.streaming.PipeMapper.configure(PipeMapper.java:66)
+	... 22 more
+Caused by: java.io.IOException: Cannot run program "/join2_mapper.py": error=13, Permission denied
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1047)
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:208)
+	... 23 more
+Caused by: java.io.IOException: error=13, Permission denied
+	at java.lang.UNIXProcess.forkAndExec(Native Method)
+	at java.lang.UNIXProcess.<init>(UNIXProcess.java:186)
+	at java.lang.ProcessImpl.start(ProcessImpl.java:130)
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1028)
+	... 24 more
+
+22/02/20 16:51:54 INFO mapreduce.Job: Task Id : attempt_1645364657674_0009_m_000002_0, Status : FAILED
+Error: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:449)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 9 more
+Caused by: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapRunner.configure(MapRunner.java:38)
+	... 14 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 17 more
+Caused by: java.lang.RuntimeException: configuration exception
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:221)
+	at org.apache.hadoop.streaming.PipeMapper.configure(PipeMapper.java:66)
+	... 22 more
+Caused by: java.io.IOException: Cannot run program "/join2_mapper.py": error=13, Permission denied
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1047)
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:208)
+	... 23 more
+Caused by: java.io.IOException: error=13, Permission denied
+	at java.lang.UNIXProcess.forkAndExec(Native Method)
+	at java.lang.UNIXProcess.<init>(UNIXProcess.java:186)
+	at java.lang.ProcessImpl.start(ProcessImpl.java:130)
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1028)
+	... 24 more
+
+22/02/20 16:51:55 INFO mapreduce.Job: Task Id : attempt_1645364657674_0009_m_000003_0, Status : FAILED
+Error: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:449)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 9 more
+Caused by: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapRunner.configure(MapRunner.java:38)
+	... 14 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 17 more
+Caused by: java.lang.RuntimeException: configuration exception
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:221)
+	at org.apache.hadoop.streaming.PipeMapper.configure(PipeMapper.java:66)
+	... 22 more
+Caused by: java.io.IOException: Cannot run program "/join2_mapper.py": error=13, Permission denied
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1047)
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:208)
+	... 23 more
+Caused by: java.io.IOException: error=13, Permission denied
+	at java.lang.UNIXProcess.forkAndExec(Native Method)
+	at java.lang.UNIXProcess.<init>(UNIXProcess.java:186)
+	at java.lang.ProcessImpl.start(ProcessImpl.java:130)
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1028)
+	... 24 more
+
+22/02/20 16:51:56 INFO mapreduce.Job: Task Id : attempt_1645364657674_0009_m_000000_1, Status : FAILED
+Error: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:449)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 9 more
+Caused by: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapRunner.configure(MapRunner.java:38)
+	... 14 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 17 more
+Caused by: java.lang.RuntimeException: configuration exception
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:221)
+	at org.apache.hadoop.streaming.PipeMapper.configure(PipeMapper.java:66)
+	... 22 more
+Caused by: java.io.IOException: Cannot run program "/join2_mapper.py": error=13, Permission denied
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1047)
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:208)
+	... 23 more
+Caused by: java.io.IOException: error=13, Permission denied
+	at java.lang.UNIXProcess.forkAndExec(Native Method)
+	at java.lang.UNIXProcess.<init>(UNIXProcess.java:186)
+	at java.lang.ProcessImpl.start(ProcessImpl.java:130)
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1028)
+	... 24 more
+
+22/02/20 16:51:57 INFO mapreduce.Job: Task Id : attempt_1645364657674_0009_m_000001_1, Status : FAILED
+Error: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:449)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 9 more
+Caused by: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapRunner.configure(MapRunner.java:38)
+	... 14 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 17 more
+Caused by: java.lang.RuntimeException: configuration exception
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:221)
+	at org.apache.hadoop.streaming.PipeMapper.configure(PipeMapper.java:66)
+	... 22 more
+Caused by: java.io.IOException: Cannot run program "/join2_mapper.py": error=13, Permission denied
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1047)
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:208)
+	... 23 more
+Caused by: java.io.IOException: error=13, Permission denied
+	at java.lang.UNIXProcess.forkAndExec(Native Method)
+	at java.lang.UNIXProcess.<init>(UNIXProcess.java:186)
+	at java.lang.ProcessImpl.start(ProcessImpl.java:130)
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1028)
+	... 24 more
+
+22/02/20 16:51:59 INFO mapreduce.Job: Task Id : attempt_1645364657674_0009_m_000002_1, Status : FAILED
+Error: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:449)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 9 more
+Caused by: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapRunner.configure(MapRunner.java:38)
+	... 14 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 17 more
+Caused by: java.lang.RuntimeException: configuration exception
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:221)
+	at org.apache.hadoop.streaming.PipeMapper.configure(PipeMapper.java:66)
+	... 22 more
+Caused by: java.io.IOException: Cannot run program "/join2_mapper.py": error=13, Permission denied
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1047)
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:208)
+	... 23 more
+Caused by: java.io.IOException: error=13, Permission denied
+	at java.lang.UNIXProcess.forkAndExec(Native Method)
+	at java.lang.UNIXProcess.<init>(UNIXProcess.java:186)
+	at java.lang.ProcessImpl.start(ProcessImpl.java:130)
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1028)
+	... 24 more
+
+22/02/20 16:52:00 INFO mapreduce.Job: Task Id : attempt_1645364657674_0009_m_000003_1, Status : FAILED
+Error: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:449)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 9 more
+Caused by: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapRunner.configure(MapRunner.java:38)
+	... 14 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 17 more
+Caused by: java.lang.RuntimeException: configuration exception
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:221)
+	at org.apache.hadoop.streaming.PipeMapper.configure(PipeMapper.java:66)
+	... 22 more
+Caused by: java.io.IOException: Cannot run program "/join2_mapper.py": error=13, Permission denied
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1047)
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:208)
+	... 23 more
+Caused by: java.io.IOException: error=13, Permission denied
+	at java.lang.UNIXProcess.forkAndExec(Native Method)
+	at java.lang.UNIXProcess.<init>(UNIXProcess.java:186)
+	at java.lang.ProcessImpl.start(ProcessImpl.java:130)
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1028)
+	... 24 more
+
+22/02/20 16:52:01 INFO mapreduce.Job: Task Id : attempt_1645364657674_0009_m_000000_2, Status : FAILED
+Error: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:449)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 9 more
+Caused by: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapRunner.configure(MapRunner.java:38)
+	... 14 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 17 more
+Caused by: java.lang.RuntimeException: configuration exception
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:221)
+	at org.apache.hadoop.streaming.PipeMapper.configure(PipeMapper.java:66)
+	... 22 more
+Caused by: java.io.IOException: Cannot run program "/join2_mapper.py": error=13, Permission denied
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1047)
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:208)
+	... 23 more
+Caused by: java.io.IOException: error=13, Permission denied
+	at java.lang.UNIXProcess.forkAndExec(Native Method)
+	at java.lang.UNIXProcess.<init>(UNIXProcess.java:186)
+	at java.lang.ProcessImpl.start(ProcessImpl.java:130)
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1028)
+	... 24 more
+
+22/02/20 16:52:02 INFO mapreduce.Job: Task Id : attempt_1645364657674_0009_m_000001_2, Status : FAILED
+Error: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:449)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 9 more
+Caused by: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapRunner.configure(MapRunner.java:38)
+	... 14 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 17 more
+Caused by: java.lang.RuntimeException: configuration exception
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:221)
+	at org.apache.hadoop.streaming.PipeMapper.configure(PipeMapper.java:66)
+	... 22 more
+Caused by: java.io.IOException: Cannot run program "/join2_mapper.py": error=13, Permission denied
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1047)
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:208)
+	... 23 more
+Caused by: java.io.IOException: error=13, Permission denied
+	at java.lang.UNIXProcess.forkAndExec(Native Method)
+	at java.lang.UNIXProcess.<init>(UNIXProcess.java:186)
+	at java.lang.ProcessImpl.start(ProcessImpl.java:130)
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1028)
+	... 24 more
+
+22/02/20 16:52:03 INFO mapreduce.Job: Task Id : attempt_1645364657674_0009_m_000002_2, Status : FAILED
+Error: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:449)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 9 more
+Caused by: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapRunner.configure(MapRunner.java:38)
+	... 14 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 17 more
+Caused by: java.lang.RuntimeException: configuration exception
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:221)
+	at org.apache.hadoop.streaming.PipeMapper.configure(PipeMapper.java:66)
+	... 22 more
+Caused by: java.io.IOException: Cannot run program "/join2_mapper.py": error=13, Permission denied
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1047)
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:208)
+	... 23 more
+Caused by: java.io.IOException: error=13, Permission denied
+	at java.lang.UNIXProcess.forkAndExec(Native Method)
+	at java.lang.UNIXProcess.<init>(UNIXProcess.java:186)
+	at java.lang.ProcessImpl.start(ProcessImpl.java:130)
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1028)
+	... 24 more
+
+22/02/20 16:52:04 INFO mapreduce.Job: Task Id : attempt_1645364657674_0009_m_000003_2, Status : FAILED
+Error: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:449)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 9 more
+Caused by: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapRunner.configure(MapRunner.java:38)
+	... 14 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 17 more
+Caused by: java.lang.RuntimeException: configuration exception
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:221)
+	at org.apache.hadoop.streaming.PipeMapper.configure(PipeMapper.java:66)
+	... 22 more
+Caused by: java.io.IOException: Cannot run program "/join2_mapper.py": error=13, Permission denied
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1047)
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:208)
+	... 23 more
+Caused by: java.io.IOException: error=13, Permission denied
+	at java.lang.UNIXProcess.forkAndExec(Native Method)
+	at java.lang.UNIXProcess.<init>(UNIXProcess.java:186)
+	at java.lang.ProcessImpl.start(ProcessImpl.java:130)
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1028)
+	... 24 more
+
+22/02/20 16:52:06 INFO mapreduce.Job:  map 100% reduce 100%
+22/02/20 16:52:06 INFO mapreduce.Job: Job job_1645364657674_0009 failed with state FAILED due to: Task failed task_1645364657674_0009_m_000000
+Job failed as tasks failed. failedMaps:1 failedReduces:0
+
+22/02/20 16:52:06 INFO mapreduce.Job: Counters: 13
+	Job Counters 
+		Failed map tasks=13
+		Killed map tasks=2
+		Launched map tasks=15
+		Other local map tasks=11
+		Data-local map tasks=4
+		Total time spent by all maps in occupied slots (ms)=28083
+		Total time spent by all reduces in occupied slots (ms)=0
+		Total time spent by all map tasks (ms)=28083
+		Total vcore-seconds taken by all map tasks=28083
+		Total megabyte-seconds taken by all map tasks=28756992
+	Map-Reduce Framework
+		CPU time spent (ms)=0
+		Physical memory (bytes) snapshot=0
+		Virtual memory (bytes) snapshot=0
+22/02/20 16:52:06 ERROR streaming.StreamJob: Job not successful!
+Streaming Command Failed!
+[root@quickstart /]# ls -a
+.     .dockerenv   join1_mapper.py     join2_gennumA.txt  lib                  media         root     tmp                  wordcount_num0_output.txt
+..    .dockerinit  join1_reducer.py    join2_gennumB.txt  lib64                mnt           sbin     touch                .wordcount_num0_output.txt.crc
+bin   echo         join2_genchanA.txt  join2_gennumC.txt  lost+found           opt           selinux  usr                  wordcount_reducer.py
+boot  etc          join2_genchanB.txt  join2_mapper.py    make_data_join2.txt  packer-files  srv      var
+dev   home         join2_genchanC.txt  join2_reducer.py   make_join2data.py    proc          sys      wordcount_mapper.py
+[root@quickstart /]# chmod +x join2_mapper.py 
+[root@quickstart /]# chmod +x join2_reducer.py 
+[root@quickstart /]# hdfs dfs rm /user/cloudera/output_join2
+rm: Unknown command
+Did you mean -rm?  This command begins with a dash.
+[root@quickstart /]# hdfs dfs -rm /user/cloudera/output_join2
+rm: `/user/cloudera/output_join2': Is a directory
+[root@quickstart /]# hdfs dfs -rmdir /user/cloudera/output_join2
+[root@quickstart /]# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar -input /user/cloudera/input_join2 -output /user/cloudera/output_join2 -mapper /join2_mapper.py -reducer /join2_reducer.py
+packageJobJar: [] [/usr/jars/hadoop-streaming-2.6.0-cdh5.7.0.jar] /tmp/streamjob4276869100609333209.jar tmpDir=null
+22/02/20 16:55:40 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 16:55:41 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 16:55:41 INFO mapred.FileInputFormat: Total input paths to process : 6
+22/02/20 16:55:41 INFO mapreduce.JobSubmitter: number of splits:6
+22/02/20 16:55:41 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1645364657674_0010
+22/02/20 16:55:41 INFO impl.YarnClientImpl: Submitted application application_1645364657674_0010
+22/02/20 16:55:41 INFO mapreduce.Job: The url to track the job: http://quickstart.cloudera:8088/proxy/application_1645364657674_0010/
+22/02/20 16:55:41 INFO mapreduce.Job: Running job: job_1645364657674_0010
+22/02/20 16:55:46 INFO mapreduce.Job: Job job_1645364657674_0010 running in uber mode : false
+22/02/20 16:55:46 INFO mapreduce.Job:  map 0% reduce 0%
+22/02/20 16:55:51 INFO mapreduce.Job:  map 17% reduce 0%
+22/02/20 16:55:52 INFO mapreduce.Job:  map 33% reduce 0%
+22/02/20 16:55:53 INFO mapreduce.Job:  map 50% reduce 0%
+22/02/20 16:55:54 INFO mapreduce.Job:  map 67% reduce 0%
+22/02/20 16:55:55 INFO mapreduce.Job:  map 83% reduce 0%
+22/02/20 16:55:56 INFO mapreduce.Job:  map 100% reduce 0%
+22/02/20 16:55:58 INFO mapreduce.Job:  map 100% reduce 100%
+22/02/20 16:55:58 INFO mapreduce.Job: Job job_1645364657674_0010 completed successfully
+22/02/20 16:55:59 INFO mapreduce.Job: Counters: 49
+	File System Counters
+		FILE: Number of bytes read=126261
+		FILE: Number of bytes written=1061959
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=113820
+		HDFS: Number of bytes written=0
+		HDFS: Number of read operations=21
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=2
+	Job Counters 
+		Launched map tasks=6
+		Launched reduce tasks=1
+		Data-local map tasks=6
+		Total time spent by all maps in occupied slots (ms)=14049
+		Total time spent by all reduces in occupied slots (ms)=4363
+		Total time spent by all map tasks (ms)=14049
+		Total time spent by all reduce tasks (ms)=4363
+		Total vcore-seconds taken by all map tasks=14049
+		Total vcore-seconds taken by all reduce tasks=4363
+		Total megabyte-seconds taken by all map tasks=14386176
+		Total megabyte-seconds taken by all reduce tasks=4467712
+	Map-Reduce Framework
+		Map input records=6600
+		Map output records=6600
+		Map output bytes=113055
+		Map output materialized bytes=126291
+		Input split bytes=765
+		Combine input records=0
+		Combine output records=0
+		Reduce input groups=54
+		Reduce shuffle bytes=126291
+		Reduce input records=6600
+		Reduce output records=0
+		Spilled Records=13200
+		Shuffled Maps =6
+		Failed Shuffles=0
+		Merged Map outputs=6
+		GC time elapsed (ms)=181
+		CPU time spent (ms)=3560
+		Physical memory (bytes) snapshot=1595445248
+		Virtual memory (bytes) snapshot=9596006400
+		Total committed heap usage (bytes)=1570766848
+	Shuffle Errors
+		BAD_ID=0
+		CONNECTION=0
+		IO_ERROR=0
+		WRONG_LENGTH=0
+		WRONG_MAP=0
+		WRONG_REDUCE=0
+	File Input Format Counters 
+		Bytes Read=113055
+	File Output Format Counters 
+		Bytes Written=0
+22/02/20 16:55:59 INFO streaming.StreamJob: Output directory: /user/cloudera/output_join2
+[root@quickstart /]# hdfs dfs -ls /user/cloudera/output_join2
+Found 2 items
+-rw-r--r--   1 root cloudera          0 2022-02-20 16:55 /user/cloudera/output_join2/_SUCCESS
+-rw-r--r--   1 root cloudera          0 2022-02-20 16:55 /user/cloudera/output_join2/part-00000
+[root@quickstart /]# hdfs dfs -cat /user/cloudera/output_join2/part-00000
+[root@quickstart /]# hdfs dfs -ls /user/cloudera/input_join2
+Found 6 items
+-rw-r--r--   1 root cloudera       1714 2022-02-20 16:16 /user/cloudera/input_join2/join2_genchanA.txt
+-rw-r--r--   1 root cloudera       3430 2022-02-20 16:16 /user/cloudera/input_join2/join2_genchanB.txt
+-rw-r--r--   1 root cloudera       5152 2022-02-20 16:16 /user/cloudera/input_join2/join2_genchanC.txt
+-rw-r--r--   1 root cloudera      17114 2022-02-20 16:16 /user/cloudera/input_join2/join2_gennumA.txt
+-rw-r--r--   1 root cloudera      34245 2022-02-20 16:16 /user/cloudera/input_join2/join2_gennumB.txt
+-rw-r--r--   1 root cloudera      51400 2022-02-20 16:16 /user/cloudera/input_join2/join2_gennumC.txt
+[root@quickstart /]# hdfs dfs -cat /user/cloudera/input_join2/join2_genchanA.txt
+Hourly_Sports,DEF
+Baked_News,BAT
+PostModern_Talking,XYZ
+Loud_News,CNO
+Almost_Show,ABC
+Hot_Talking,DEF
+Dumb_Show,BAT
+Surreal_Show,XYZ
+Cold_Talking,CNO
+Hourly_Cooking,ABC
+Baked_Cooking,DEF
+PostModern_News,BAT
+Loud_Cooking,XYZ
+Almost_Sports,CNO
+Hot_Show,ABC
+Dumb_Sports,DEF
+Surreal_Sports,BAT
+Cold_Show,XYZ
+Hourly_Games,CNO
+Baked_Games,ABC
+PostModern_Cooking,DEF
+Loud_Games,BAT
+Almost_Talking,XYZ
+Hot_Sports,CNO
+Dumb_Talking,ABC
+Surreal_Talking,DEF
+Cold_Sports,BAT
+Hourly_Talking,XYZ
+Baked_Talking,CNO
+PostModern_Games,ABC
+Loud_Talking,DEF
+Almost_News,BAT
+Hot_Talking,XYZ
+Dumb_News,CNO
+Surreal_News,ABC
+Cold_Talking,DEF
+Hourly_Show,BAT
+Baked_Show,XYZ
+PostModern_Talking,CNO
+Loud_Show,ABC
+Almost_Cooking,DEF
+Hot_News,BAT
+Dumb_Cooking,XYZ
+Surreal_Cooking,CNO
+Cold_News,ABC
+Hourly_Sports,DEF
+Baked_Sports,BAT
+PostModern_Show,XYZ
+Loud_Sports,CNO
+Almost_Games,ABC
+Hot_Cooking,DEF
+Dumb_Games,BAT
+Surreal_Games,XYZ
+Cold_Cooking,CNO
+Hourly_Talking,ABC
+Baked_Talking,DEF
+PostModern_Sports,BAT
+Loud_Talking,XYZ
+Almost_Talking,CNO
+Hot_Games,ABC
+Dumb_Talking,DEF
+Surreal_Talking,BAT
+Cold_Games,XYZ
+Hourly_News,CNO
+Baked_News,ABC
+PostModern_Talking,DEF
+Loud_News,BAT
+Almost_Show,XYZ
+Hot_Talking,CNO
+Dumb_Show,ABC
+Surreal_Show,DEF
+Cold_Talking,BAT
+Hourly_Cooking,XYZ
+Baked_Cooking,CNO
+PostModern_News,ABC
+Loud_Cooking,DEF
+Almost_Sports,BAT
+Hot_Show,XYZ
+Dumb_Sports,CNO
+Surreal_Sports,ABC
+Cold_Show,DEF
+Hourly_Games,BAT
+Baked_Games,XYZ
+PostModern_Cooking,CNO
+Loud_Games,ABC
+Almost_Talking,DEF
+Hot_Sports,BAT
+Dumb_Talking,XYZ
+Surreal_Talking,CNO
+Cold_Sports,ABC
+Hourly_Talking,DEF
+Baked_Talking,BAT
+PostModern_Games,XYZ
+Loud_Talking,CNO
+Almost_News,ABC
+Hot_Talking,DEF
+Dumb_News,BAT
+Surreal_News,XYZ
+Cold_Talking,CNO
+Hourly_Show,ABC
+[root@quickstart /]# ls -a
+.     .dockerenv   join1_mapper.py     join2_gennumA.txt  lib                  media         root     tmp                  wordcount_num0_output.txt
+..    .dockerinit  join1_reducer.py    join2_gennumB.txt  lib64                mnt           sbin     touch                .wordcount_num0_output.txt.crc
+bin   echo         join2_genchanA.txt  join2_gennumC.txt  lost+found           opt           selinux  usr                  wordcount_reducer.py
+boot  etc          join2_genchanB.txt  join2_mapper.py    make_data_join2.txt  packer-files  srv      var
+dev   home         join2_genchanC.txt  join2_reducer.py   make_join2data.py    proc          sys      wordcount_mapper.py
+[root@quickstart /]# cat join1_mapper.py
+#!/usr/bin/env python
+import sys
+
+# --------------------------------------------------------------------------
+#This mapper code will input a <date word, value> input file, and move date into 
+#  the value field for output
+#  
+#  Note, this program is written in a simple style and does not full advantage of Python 
+#     data structures,but I believe it is more readable
+#
+#  Note, there is NO error checking of the input, it is assumed to be correct
+#     meaning no extra spaces, missing inputs or counts,etc..
+#
+# See #  see https://docs.python.org/2/tutorial/index.html for details  and python  tutorials
+#
+# --------------------------------------------------------------------------
+
+
+
+for line in sys.stdin:
+    line       = line.strip()   #strip out carriage return
+    key_value  = line.split(",")   #split line, into key and value, returns a list
+    key_in     = key_value[0].split(" ")   #key is first item in list
+    value_in   = key_value[1]   #value is 2nd item 
+
+    #print key_in
+    if len(key_in)>=2:           #if this entry has <date word> in key
+        date = key_in[0]      #now get date from key field
+        word = key_in[1]
+        value_out = date+" "+value_in     #concatenate date, blank, and value_in
+        print( '%s\t%s' % (word, value_out) )  #print a string, tab, and string
+    else:   #key is only <word> so just pass it through
+        print( '%s\t%s' % (key_in[0], value_in) )  #print a string tab and string
+
+#Note that Hadoop expects a tab to separate key value
+#but this program assumes the input file has a ',' separating key value
+[root@quickstart /]# cat join2_mapper.py
+#!/usr/bin/env python
+import sys
+
+for line in sys.stdin:
+    line = line.strip()
+    key_value = line.split(',')
+    key = key_value[0]
+    value = key_value[1]
+    print('{0}\t{1}'.format(key, value))
+[root@quickstart /]# cat join2_reducer.py
+[root@quickstart /]# vim join2_reducer.py
+[root@quickstart /]# vim join1_mapper.py
+[root@quickstart /]# rm join1_mapper.py
+rm: remove regular file `join1_mapper.py'? yes
+[root@quickstart /]# touch join1_mapper.py
+[root@quickstart /]# vim join1_mapper.py
+[root@quickstart /]# cat join1_mapper.py
+#!/usr/bin/env python
+import sys
+
+for line in sys.stdin:
+    line = line.strip()
+    key_value = line.split(',')
+    key = key_value[0]
+    value = key_value[1]
+    print('{0}\t{1}'.format(key, value))
+[root@quickstart /]# ls -a
+.     .dockerenv   join1_mapper.py     join2_gennumA.txt  lib                  media         root     tmp                  wordcount_num0_output.txt
+..    .dockerinit  join1_reducer.py    join2_gennumB.txt  lib64                mnt           sbin     touch                .wordcount_num0_output.txt.crc
+bin   echo         join2_genchanA.txt  join2_gennumC.txt  lost+found           opt           selinux  usr                  wordcount_reducer.py
+boot  etc          join2_genchanB.txt  join2_mapper.py    make_data_join2.txt  packer-files  srv      var
+dev   home         join2_genchanC.txt  join2_reducer.py   make_join2data.py    proc          sys      wordcount_mapper.py
+[root@quickstart /]# chmod +x join2_reducer.py 
+[root@quickstart /]# cat join2_mapper.py
+#!/usr/bin/env python
+import sys
+
+for line in sys.stdin:
+    line = line.strip()
+    key_value = line.split(',')
+    key = key_value[0]
+    value = key_value[1]
+    print('{0}\t{1}'.format(key, value))
+[root@quickstart /]# cat join2_reducer.py
+#!/usr/bin/env python
+import sys
+
+previous = ''
+sum = 0
+line_count = 0
+has_abc = False
+for line in sys.stdin:
+    # Same logic from wordcount
+    line_count += 1
+    line = line.strip()
+    key_value = line.split('\t')
+    key = key_value[0]
+    value = key_value[1]
+    # If previous differs from actual key, means that key is updated. we need to print the previous values.
+    if key != previous:
+        if line_count > 1 and has_abc:
+            print ('{0}\t{1}'.format(previous, sum))
+        sum = 0
+        previous = key
+        has_abc = False
+
+    if value == 'ABC':
+        has_abc = True
+    elif value.isdigit():
+        sum += int(value)
+
+if has_abc:
+    print ('{0} \t {1}'.format(previous, sum))
+[root@quickstart /]# hdfs dfs -rm /user/cloudera/input_join2
+rm: `/user/cloudera/input_join2': Is a directory
+[root@quickstart /]# hdfs dfs -rmdir /user/cloudera/input_join2
+rmdir: `/user/cloudera/input_join2': Directory is not empty
+[root@quickstart /]# hdfs dfs -rm -r -f /user/cloudera/input_join2
+Deleted /user/cloudera/input_join2
+[root@quickstart /]# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar -input /user/cloudera/input_join2 -output /user/cloudera/output_join2 -mapper /join2_mapper.py -reducer /join2_reducer.py
+packageJobJar: [] [/usr/jars/hadoop-streaming-2.6.0-cdh5.7.0.jar] /tmp/streamjob3483744729553109953.jar tmpDir=null
+22/02/20 17:08:33 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 17:08:34 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 17:08:34 WARN security.UserGroupInformation: PriviledgedActionException as:root (auth:SIMPLE) cause:org.apache.hadoop.mapred.FileAlreadyExistsException: Output directory hdfs://quickstart.cloudera:8020/user/cloudera/output_join2 already exists
+22/02/20 17:08:34 WARN security.UserGroupInformation: PriviledgedActionException as:root (auth:SIMPLE) cause:org.apache.hadoop.mapred.FileAlreadyExistsException: Output directory hdfs://quickstart.cloudera:8020/user/cloudera/output_join2 already exists
+22/02/20 17:08:34 ERROR streaming.StreamJob: Error Launching job : Output directory hdfs://quickstart.cloudera:8020/user/cloudera/output_join2 already exists
+Streaming Command Failed!
+[root@quickstart /]# hdfs dfs -rm -r -f /user/cloudera/output_join2
+Deleted /user/cloudera/output_join2
+[root@quickstart /]# hdfs dfs -put join2*.txt /user/cloudera/input_join2
+put: `/user/cloudera/input_join2': No such file or directory
+[root@quickstart /]# hdfs dfs -mkdir /user/cloudera/input_join2
+[root@quickstart /]# hdfs dfs -put join2*.txt /user/cloudera/input_join2
+[root@quickstart /]# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar -input /user/cloudera/input_join2 -output /user/cloudera/output_join2 -mapper /join2_mapper.py -reducer /join2_reducer.py
+packageJobJar: [] [/usr/jars/hadoop-streaming-2.6.0-cdh5.7.0.jar] /tmp/streamjob5758117755670836166.jar tmpDir=null
+22/02/20 17:10:04 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 17:10:04 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 17:10:05 INFO mapred.FileInputFormat: Total input paths to process : 6
+22/02/20 17:10:05 INFO mapreduce.JobSubmitter: number of splits:6
+22/02/20 17:10:05 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1645364657674_0011
+22/02/20 17:10:05 INFO impl.YarnClientImpl: Submitted application application_1645364657674_0011
+22/02/20 17:10:05 INFO mapreduce.Job: The url to track the job: http://quickstart.cloudera:8088/proxy/application_1645364657674_0011/
+22/02/20 17:10:05 INFO mapreduce.Job: Running job: job_1645364657674_0011
+22/02/20 17:10:09 INFO mapreduce.Job: Job job_1645364657674_0011 running in uber mode : false
+22/02/20 17:10:09 INFO mapreduce.Job:  map 0% reduce 0%
+22/02/20 17:10:14 INFO mapreduce.Job:  map 17% reduce 0%
+22/02/20 17:10:15 INFO mapreduce.Job:  map 33% reduce 0%
+22/02/20 17:10:16 INFO mapreduce.Job:  map 50% reduce 0%
+22/02/20 17:10:17 INFO mapreduce.Job:  map 67% reduce 0%
+22/02/20 17:10:18 INFO mapreduce.Job:  map 83% reduce 0%
+22/02/20 17:10:20 INFO mapreduce.Job:  map 100% reduce 0%
+22/02/20 17:10:21 INFO mapreduce.Job:  map 100% reduce 100%
+22/02/20 17:10:21 INFO mapreduce.Job: Job job_1645364657674_0011 completed successfully
+22/02/20 17:10:21 INFO mapreduce.Job: Counters: 49
+	File System Counters
+		FILE: Number of bytes read=126261
+		FILE: Number of bytes written=1061959
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=113820
+		HDFS: Number of bytes written=370
+		HDFS: Number of read operations=21
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=2
+	Job Counters 
+		Launched map tasks=6
+		Launched reduce tasks=1
+		Data-local map tasks=6
+		Total time spent by all maps in occupied slots (ms)=13416
+		Total time spent by all reduces in occupied slots (ms)=4473
+		Total time spent by all map tasks (ms)=13416
+		Total time spent by all reduce tasks (ms)=4473
+		Total vcore-seconds taken by all map tasks=13416
+		Total vcore-seconds taken by all reduce tasks=4473
+		Total megabyte-seconds taken by all map tasks=13737984
+		Total megabyte-seconds taken by all reduce tasks=4580352
+	Map-Reduce Framework
+		Map input records=6600
+		Map output records=6600
+		Map output bytes=113055
+		Map output materialized bytes=126291
+		Input split bytes=765
+		Combine input records=0
+		Combine output records=0
+		Reduce input groups=54
+		Reduce shuffle bytes=126291
+		Reduce input records=6600
+		Reduce output records=20
+		Spilled Records=13200
+		Shuffled Maps =6
+		Failed Shuffles=0
+		Merged Map outputs=6
+		GC time elapsed (ms)=161
+		CPU time spent (ms)=4030
+		Physical memory (bytes) snapshot=1624145920
+		Virtual memory (bytes) snapshot=9617072128
+		Total committed heap usage (bytes)=1570766848
+	Shuffle Errors
+		BAD_ID=0
+		CONNECTION=0
+		IO_ERROR=0
+		WRONG_LENGTH=0
+		WRONG_MAP=0
+		WRONG_REDUCE=0
+	File Input Format Counters 
+		Bytes Read=113055
+	File Output Format Counters 
+		Bytes Written=370
+22/02/20 17:10:21 INFO streaming.StreamJob: Output directory: /user/cloudera/output_join2
+[root@quickstart /]# hdfs dfs -ls /user/cloudera/output_join2
+Found 2 items
+-rw-r--r--   1 root cloudera          0 2022-02-20 17:10 /user/cloudera/output_join2/_SUCCESS
+-rw-r--r--   1 root cloudera        370 2022-02-20 17:10 /user/cloudera/output_join2/part-00000
+[root@quickstart /]# hdfs dfs cat /user/cloudera/output_join2/part-00000
+cat: Unknown command
+Did you mean -cat?  This command begins with a dash.
+[root@quickstart /]# hdfs dfs -cat /user/cloudera/output_join2/part-00000
+Almost_Games	49237
+Almost_News	46592
+Almost_Show	50202
+Baked_Games	51604
+Baked_News	47211
+Cold_News	47924
+Cold_Sports	52005
+Dumb_Show	53824
+Dumb_Talking	103894
+Hot_Games	50228
+Hot_Show	54378
+Hourly_Cooking	54208
+Hourly_Show	48283
+Hourly_Talking	108163
+Loud_Games	49482
+Loud_Show	50820
+PostModern_Games	50644
+PostModern_News	50021
+Surreal_News	50420
+Surreal_Sports	46834
