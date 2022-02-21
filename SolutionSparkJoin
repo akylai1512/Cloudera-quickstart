@@ -1,0 +1,325 @@
+[root@quickstart /]# pyspark
+Python 2.6.6 (r266:84292, Jul 23 2015, 15:22:56) 
+[GCC 4.4.7 20120313 (Red Hat 4.4.7-11)] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/usr/lib/zookeeper/lib/slf4j-log4j12-1.7.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/usr/jars/slf4j-log4j12-1.7.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+22/02/20 18:44:06 INFO spark.SparkContext: Running Spark version 1.6.0
+22/02/20 18:44:06 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+22/02/20 18:44:06 INFO spark.SecurityManager: Changing view acls to: root
+22/02/20 18:44:06 INFO spark.SecurityManager: Changing modify acls to: root
+22/02/20 18:44:06 INFO spark.SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: Set(root); users with modify permissions: Set(root)
+22/02/20 18:44:06 INFO util.Utils: Successfully started service 'sparkDriver' on port 43467.
+22/02/20 18:44:06 INFO slf4j.Slf4jLogger: Slf4jLogger started
+22/02/20 18:44:06 INFO Remoting: Starting remoting
+22/02/20 18:44:06 INFO Remoting: Remoting started; listening on addresses :[akka.tcp://sparkDriverActorSystem@172.17.0.2:36259]
+22/02/20 18:44:06 INFO Remoting: Remoting now listens on addresses: [akka.tcp://sparkDriverActorSystem@172.17.0.2:36259]
+22/02/20 18:44:06 INFO util.Utils: Successfully started service 'sparkDriverActorSystem' on port 36259.
+22/02/20 18:44:06 INFO spark.SparkEnv: Registering MapOutputTracker
+22/02/20 18:44:07 INFO spark.SparkEnv: Registering BlockManagerMaster
+22/02/20 18:44:07 INFO storage.DiskBlockManager: Created local directory at /tmp/blockmgr-7d35e752-a89f-45b2-b546-3abe0fc38f21
+22/02/20 18:44:07 INFO storage.MemoryStore: MemoryStore started with capacity 530.3 MB
+22/02/20 18:44:07 INFO spark.SparkEnv: Registering OutputCommitCoordinator
+22/02/20 18:44:07 INFO server.Server: jetty-8.y.z-SNAPSHOT
+22/02/20 18:44:07 INFO server.AbstractConnector: Started SelectChannelConnector@0.0.0.0:4040
+22/02/20 18:44:07 INFO util.Utils: Successfully started service 'SparkUI' on port 4040.
+22/02/20 18:44:07 INFO ui.SparkUI: Started SparkUI at http://172.17.0.2:4040
+22/02/20 18:44:07 INFO executor.Executor: Starting executor ID driver on host localhost
+22/02/20 18:44:07 INFO util.Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 40573.
+22/02/20 18:44:07 INFO netty.NettyBlockTransferService: Server created on 40573
+22/02/20 18:44:07 INFO storage.BlockManagerMaster: Trying to register BlockManager
+22/02/20 18:44:07 INFO storage.BlockManagerMasterEndpoint: Registering block manager localhost:40573 with 530.3 MB RAM, BlockManagerId(driver, localhost, 40573)
+22/02/20 18:44:07 INFO storage.BlockManagerMaster: Registered BlockManager
+Welcome to
+      ____              __
+     / __/__  ___ _____/ /__
+    _\ \/ _ \/ _ `/ __/  '_/
+   /__ / .__/\_,_/_/ /_/\_\   version 1.6.0
+      /_/
+
+Using Python version 2.6.6 (r266:84292, Jul 23 2015 15:22:56)
+SparkContext available as sc, HiveContext available as sqlContext.
+>>> def split_fileA(line):
+...     # split the input line in word and count on the comma
+...     word,count=line.split(",")
+...     # turn the count to an integer  
+...     count=int(count)
+...     return (word, count)
+... test_line = "able,991"
+  File "<stdin>", line 7
+    test_line = "able,991"
+            ^
+SyntaxError: invalid syntax
+>>> test_line = "able,991"
+>>> split_fileA(test_line)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'split_fileA' is not defined
+>>> def split_fileA(line):      
+...     word,count=line.split(",")
+...     count=int(count)
+...     return (word, count)
+... 
+>>> test_line = "able,991"
+>>> split_fileA(test_line)
+('able', 991)
+>>> fileA = sc.textFile("/user/cloudera/input/join1_FileA.txt")
+22/02/20 18:49:50 INFO storage.MemoryStore: Block broadcast_0 stored as values in memory (estimated size 123.8 KB, free 123.8 KB)
+22/02/20 18:49:51 INFO storage.MemoryStore: Block broadcast_0_piece0 stored as bytes in memory (estimated size 15.3 KB, free 139.1 KB)
+22/02/20 18:49:51 INFO storage.BlockManagerInfo: Added broadcast_0_piece0 in memory on localhost:40573 (size: 15.3 KB, free: 530.3 MB)
+22/02/20 18:49:51 INFO spark.SparkContext: Created broadcast 0 from textFile at NativeMethodAccessorImpl.java:-2
+>>> fileA.collect()
+22/02/20 18:50:05 WARN shortcircuit.DomainSocketFactory: The short-circuit local reads feature cannot be used because libhadoop cannot be loaded.
+22/02/20 18:50:05 INFO mapred.FileInputFormat: Total input paths to process : 1
+22/02/20 18:50:05 INFO spark.SparkContext: Starting job: collect at <stdin>:1
+22/02/20 18:50:05 INFO scheduler.DAGScheduler: Got job 0 (collect at <stdin>:1) with 2 output partitions
+22/02/20 18:50:05 INFO scheduler.DAGScheduler: Final stage: ResultStage 0 (collect at <stdin>:1)
+22/02/20 18:50:05 INFO scheduler.DAGScheduler: Parents of final stage: List()
+22/02/20 18:50:05 INFO scheduler.DAGScheduler: Missing parents: List()
+22/02/20 18:50:05 INFO scheduler.DAGScheduler: Submitting ResultStage 0 (/user/cloudera/input/join1_FileA.txt MapPartitionsRDD[1] at textFile at NativeMethodAccessorImpl.java:-2), which has no missing parents
+22/02/20 18:50:05 INFO storage.MemoryStore: Block broadcast_1 stored as values in memory (estimated size 3.1 KB, free 142.2 KB)
+22/02/20 18:50:05 INFO storage.MemoryStore: Block broadcast_1_piece0 stored as bytes in memory (estimated size 1824.0 B, free 143.9 KB)
+22/02/20 18:50:05 INFO storage.BlockManagerInfo: Added broadcast_1_piece0 in memory on localhost:40573 (size: 1824.0 B, free: 530.3 MB)
+22/02/20 18:50:05 INFO spark.SparkContext: Created broadcast 1 from broadcast at DAGScheduler.scala:1006
+22/02/20 18:50:05 INFO scheduler.DAGScheduler: Submitting 2 missing tasks from ResultStage 0 (/user/cloudera/input/join1_FileA.txt MapPartitionsRDD[1] at textFile at NativeMethodAccessorImpl.java:-2)
+22/02/20 18:50:05 INFO scheduler.TaskSchedulerImpl: Adding task set 0.0 with 2 tasks
+22/02/20 18:50:05 INFO scheduler.TaskSetManager: Starting task 0.0 in stage 0.0 (TID 0, localhost, partition 0,ANY, 2169 bytes)
+22/02/20 18:50:05 INFO scheduler.TaskSetManager: Starting task 1.0 in stage 0.0 (TID 1, localhost, partition 1,ANY, 2169 bytes)
+22/02/20 18:50:05 INFO executor.Executor: Running task 0.0 in stage 0.0 (TID 0)
+22/02/20 18:50:05 INFO executor.Executor: Running task 1.0 in stage 0.0 (TID 1)
+22/02/20 18:50:05 INFO rdd.HadoopRDD: Input split: hdfs://quickstart.cloudera:8020/user/cloudera/input/join1_FileA.txt:18+19
+22/02/20 18:50:05 INFO rdd.HadoopRDD: Input split: hdfs://quickstart.cloudera:8020/user/cloudera/input/join1_FileA.txt:0+18
+22/02/20 18:50:05 INFO Configuration.deprecation: mapred.tip.id is deprecated. Instead, use mapreduce.task.id
+22/02/20 18:50:05 INFO Configuration.deprecation: mapred.task.id is deprecated. Instead, use mapreduce.task.attempt.id
+22/02/20 18:50:05 INFO Configuration.deprecation: mapred.task.is.map is deprecated. Instead, use mapreduce.task.ismap
+22/02/20 18:50:05 INFO Configuration.deprecation: mapred.task.partition is deprecated. Instead, use mapreduce.task.partition
+22/02/20 18:50:05 INFO Configuration.deprecation: mapred.job.id is deprecated. Instead, use mapreduce.job.id
+22/02/20 18:50:05 INFO executor.Executor: Finished task 1.0 in stage 0.0 (TID 1). 2055 bytes result sent to driver
+22/02/20 18:50:05 INFO executor.Executor: Finished task 0.0 in stage 0.0 (TID 0). 2078 bytes result sent to driver
+22/02/20 18:50:05 INFO scheduler.TaskSetManager: Finished task 1.0 in stage 0.0 (TID 1) in 125 ms on localhost (1/2)
+22/02/20 18:50:05 INFO scheduler.TaskSetManager: Finished task 0.0 in stage 0.0 (TID 0) in 141 ms on localhost (2/2)
+22/02/20 18:50:05 INFO scheduler.TaskSchedulerImpl: Removed TaskSet 0.0, whose tasks have all completed, from pool 
+22/02/20 18:50:05 INFO scheduler.DAGScheduler: ResultStage 0 (collect at <stdin>:1) finished in 0.150 s
+22/02/20 18:50:05 INFO scheduler.DAGScheduler: Job 0 finished: collect at <stdin>:1, took 0.190088 s
+[u'able,991', u'about,11', u'burger,15', u'actor,22']
+>>> fileB = sc.textFile("/user/cloudera/input/join1_FileB.txt")
+22/02/20 18:50:45 INFO storage.MemoryStore: Block broadcast_2 stored as values in memory (estimated size 92.1 KB, free 236.0 KB)
+22/02/20 18:50:45 INFO storage.MemoryStore: Block broadcast_2_piece0 stored as bytes in memory (estimated size 21.3 KB, free 257.3 KB)
+22/02/20 18:50:45 INFO storage.BlockManagerInfo: Added broadcast_2_piece0 in memory on localhost:40573 (size: 21.3 KB, free: 530.2 MB)
+22/02/20 18:50:45 INFO spark.SparkContext: Created broadcast 2 from textFile at NativeMethodAccessorImpl.java:-2
+>>> fileA.collect()
+22/02/20 18:50:50 INFO spark.SparkContext: Starting job: collect at <stdin>:1
+22/02/20 18:50:50 INFO scheduler.DAGScheduler: Got job 1 (collect at <stdin>:1) with 2 output partitions
+22/02/20 18:50:50 INFO scheduler.DAGScheduler: Final stage: ResultStage 1 (collect at <stdin>:1)
+22/02/20 18:50:50 INFO scheduler.DAGScheduler: Parents of final stage: List()
+22/02/20 18:50:50 INFO scheduler.DAGScheduler: Missing parents: List()
+22/02/20 18:50:50 INFO scheduler.DAGScheduler: Submitting ResultStage 1 (/user/cloudera/input/join1_FileA.txt MapPartitionsRDD[1] at textFile at NativeMethodAccessorImpl.java:-2), which has no missing parents
+22/02/20 18:50:50 INFO storage.MemoryStore: Block broadcast_3 stored as values in memory (estimated size 3.1 KB, free 260.4 KB)
+22/02/20 18:50:50 INFO storage.MemoryStore: Block broadcast_3_piece0 stored as bytes in memory (estimated size 1824.0 B, free 262.1 KB)
+22/02/20 18:50:50 INFO storage.BlockManagerInfo: Added broadcast_3_piece0 in memory on localhost:40573 (size: 1824.0 B, free: 530.2 MB)
+22/02/20 18:50:50 INFO spark.SparkContext: Created broadcast 3 from broadcast at DAGScheduler.scala:1006
+22/02/20 18:50:50 INFO scheduler.DAGScheduler: Submitting 2 missing tasks from ResultStage 1 (/user/cloudera/input/join1_FileA.txt MapPartitionsRDD[1] at textFile at NativeMethodAccessorImpl.java:-2)
+22/02/20 18:50:50 INFO scheduler.TaskSchedulerImpl: Adding task set 1.0 with 2 tasks
+22/02/20 18:50:50 INFO scheduler.TaskSetManager: Starting task 0.0 in stage 1.0 (TID 2, localhost, partition 0,ANY, 2169 bytes)
+22/02/20 18:50:50 INFO scheduler.TaskSetManager: Starting task 1.0 in stage 1.0 (TID 3, localhost, partition 1,ANY, 2169 bytes)
+22/02/20 18:50:50 INFO executor.Executor: Running task 0.0 in stage 1.0 (TID 2)
+22/02/20 18:50:50 INFO executor.Executor: Running task 1.0 in stage 1.0 (TID 3)
+22/02/20 18:50:50 INFO rdd.HadoopRDD: Input split: hdfs://quickstart.cloudera:8020/user/cloudera/input/join1_FileA.txt:0+18
+22/02/20 18:50:50 INFO rdd.HadoopRDD: Input split: hdfs://quickstart.cloudera:8020/user/cloudera/input/join1_FileA.txt:18+19
+22/02/20 18:50:50 INFO executor.Executor: Finished task 0.0 in stage 1.0 (TID 2). 2078 bytes result sent to driver
+22/02/20 18:50:50 INFO executor.Executor: Finished task 1.0 in stage 1.0 (TID 3). 2055 bytes result sent to driver
+22/02/20 18:50:50 INFO scheduler.TaskSetManager: Finished task 0.0 in stage 1.0 (TID 2) in 23 ms on localhost (1/2)
+22/02/20 18:50:50 INFO scheduler.DAGScheduler: ResultStage 1 (collect at <stdin>:1) finished in 0.024 s
+22/02/20 18:50:50 INFO scheduler.TaskSetManager: Finished task 1.0 in stage 1.0 (TID 3) in 23 ms on localhost (2/2)
+22/02/20 18:50:50 INFO scheduler.TaskSchedulerImpl: Removed TaskSet 1.0, whose tasks have all completed, from pool 
+22/02/20 18:50:50 INFO scheduler.DAGScheduler: Job 1 finished: collect at <stdin>:1, took 0.035227 s
+[u'able,991', u'about,11', u'burger,15', u'actor,22']
+>>> fileB.collect()
+22/02/20 18:51:12 INFO mapred.FileInputFormat: Total input paths to process : 1
+22/02/20 18:51:12 INFO spark.SparkContext: Starting job: collect at <stdin>:1
+22/02/20 18:51:12 INFO scheduler.DAGScheduler: Got job 2 (collect at <stdin>:1) with 2 output partitions
+22/02/20 18:51:12 INFO scheduler.DAGScheduler: Final stage: ResultStage 2 (collect at <stdin>:1)
+22/02/20 18:51:12 INFO scheduler.DAGScheduler: Parents of final stage: List()
+22/02/20 18:51:12 INFO scheduler.DAGScheduler: Missing parents: List()
+22/02/20 18:51:12 INFO scheduler.DAGScheduler: Submitting ResultStage 2 (/user/cloudera/input/join1_FileB.txt MapPartitionsRDD[3] at textFile at NativeMethodAccessorImpl.java:-2), which has no missing parents
+22/02/20 18:51:12 INFO storage.MemoryStore: Block broadcast_4 stored as values in memory (estimated size 3.1 KB, free 265.2 KB)
+22/02/20 18:51:12 INFO storage.MemoryStore: Block broadcast_4_piece0 stored as bytes in memory (estimated size 1822.0 B, free 267.0 KB)
+22/02/20 18:51:12 INFO storage.BlockManagerInfo: Added broadcast_4_piece0 in memory on localhost:40573 (size: 1822.0 B, free: 530.2 MB)
+22/02/20 18:51:12 INFO spark.SparkContext: Created broadcast 4 from broadcast at DAGScheduler.scala:1006
+22/02/20 18:51:12 INFO scheduler.DAGScheduler: Submitting 2 missing tasks from ResultStage 2 (/user/cloudera/input/join1_FileB.txt MapPartitionsRDD[3] at textFile at NativeMethodAccessorImpl.java:-2)
+22/02/20 18:51:12 INFO scheduler.TaskSchedulerImpl: Adding task set 2.0 with 2 tasks
+22/02/20 18:51:12 INFO scheduler.TaskSetManager: Starting task 0.0 in stage 2.0 (TID 4, localhost, partition 0,ANY, 2169 bytes)
+22/02/20 18:51:12 INFO scheduler.TaskSetManager: Starting task 1.0 in stage 2.0 (TID 5, localhost, partition 1,ANY, 2169 bytes)
+22/02/20 18:51:12 INFO executor.Executor: Running task 0.0 in stage 2.0 (TID 4)
+22/02/20 18:51:12 INFO executor.Executor: Running task 1.0 in stage 2.0 (TID 5)
+22/02/20 18:51:12 INFO rdd.HadoopRDD: Input split: hdfs://quickstart.cloudera:8020/user/cloudera/input/join1_FileB.txt:61+61
+22/02/20 18:51:12 INFO rdd.HadoopRDD: Input split: hdfs://quickstart.cloudera:8020/user/cloudera/input/join1_FileB.txt:0+61
+22/02/20 18:51:12 INFO executor.Executor: Finished task 0.0 in stage 2.0 (TID 4). 2128 bytes result sent to driver
+22/02/20 18:51:12 INFO executor.Executor: Finished task 1.0 in stage 2.0 (TID 5). 2098 bytes result sent to driver
+22/02/20 18:51:12 INFO scheduler.TaskSetManager: Finished task 0.0 in stage 2.0 (TID 4) in 21 ms on localhost (1/2)
+22/02/20 18:51:12 INFO scheduler.DAGScheduler: ResultStage 2 (collect at <stdin>:1) finished in 0.022 s
+22/02/20 18:51:12 INFO scheduler.TaskSetManager: Finished task 1.0 in stage 2.0 (TID 5) in 22 ms on localhost (2/2)
+22/02/20 18:51:12 INFO scheduler.TaskSchedulerImpl: Removed TaskSet 2.0, whose tasks have all completed, from pool 
+22/02/20 18:51:12 INFO scheduler.DAGScheduler: Job 2 finished: collect at <stdin>:1, took 0.036431 s
+[u'Jan-01 able,5', u'Feb-02 about,3', u'Mar-03 about,8', u'Apr-04 able,13', u'Feb-22 actor,3', u'Feb-23 burger,5', u'Mar-08 burger,2', u'Dec-15 able,100']
+>>> def split_fileB(line):      
+...     wordDate,count_string=line.split(",")
+...     count=int(count_string)
+...     date,word=wordDate.split(" ")
+...     return (word, date + " " + count_string)
+... 
+>>> fileB_data = fileB.map(split_fileB) 
+>>> fileB_data.collect() 
+22/02/20 18:52:10 INFO spark.SparkContext: Starting job: collect at <stdin>:1
+22/02/20 18:52:10 INFO scheduler.DAGScheduler: Got job 3 (collect at <stdin>:1) with 2 output partitions
+22/02/20 18:52:10 INFO scheduler.DAGScheduler: Final stage: ResultStage 3 (collect at <stdin>:1)
+22/02/20 18:52:10 INFO scheduler.DAGScheduler: Parents of final stage: List()
+22/02/20 18:52:10 INFO scheduler.DAGScheduler: Missing parents: List()
+22/02/20 18:52:10 INFO scheduler.DAGScheduler: Submitting ResultStage 3 (PythonRDD[4] at collect at <stdin>:1), which has no missing parents
+22/02/20 18:52:10 INFO storage.MemoryStore: Block broadcast_5 stored as values in memory (estimated size 4.9 KB, free 272.0 KB)
+22/02/20 18:52:10 INFO storage.MemoryStore: Block broadcast_5_piece0 stored as bytes in memory (estimated size 3.1 KB, free 275.1 KB)
+22/02/20 18:52:10 INFO storage.BlockManagerInfo: Added broadcast_5_piece0 in memory on localhost:40573 (size: 3.1 KB, free: 530.2 MB)
+22/02/20 18:52:10 INFO spark.SparkContext: Created broadcast 5 from broadcast at DAGScheduler.scala:1006
+22/02/20 18:52:10 INFO scheduler.DAGScheduler: Submitting 2 missing tasks from ResultStage 3 (PythonRDD[4] at collect at <stdin>:1)
+22/02/20 18:52:10 INFO scheduler.TaskSchedulerImpl: Adding task set 3.0 with 2 tasks
+22/02/20 18:52:10 INFO scheduler.TaskSetManager: Starting task 0.0 in stage 3.0 (TID 6, localhost, partition 0,ANY, 2169 bytes)
+22/02/20 18:52:10 INFO scheduler.TaskSetManager: Starting task 1.0 in stage 3.0 (TID 7, localhost, partition 1,ANY, 2169 bytes)
+22/02/20 18:52:10 INFO executor.Executor: Running task 1.0 in stage 3.0 (TID 7)
+22/02/20 18:52:10 INFO executor.Executor: Running task 0.0 in stage 3.0 (TID 6)
+22/02/20 18:52:10 INFO rdd.HadoopRDD: Input split: hdfs://quickstart.cloudera:8020/user/cloudera/input/join1_FileB.txt:0+61
+22/02/20 18:52:10 INFO rdd.HadoopRDD: Input split: hdfs://quickstart.cloudera:8020/user/cloudera/input/join1_FileB.txt:61+61
+22/02/20 18:52:10 INFO python.PythonRunner: Times: total = 142, boot = 137, init = 5, finish = 0
+22/02/20 18:52:10 INFO executor.Executor: Finished task 1.0 in stage 3.0 (TID 7). 2221 bytes result sent to driver
+22/02/20 18:52:10 INFO python.PythonRunner: Times: total = 145, boot = 137, init = 8, finish = 0
+22/02/20 18:52:10 INFO executor.Executor: Finished task 0.0 in stage 3.0 (TID 6). 2287 bytes result sent to driver
+22/02/20 18:52:10 INFO scheduler.TaskSetManager: Finished task 1.0 in stage 3.0 (TID 7) in 167 ms on localhost (1/2)
+22/02/20 18:52:10 INFO scheduler.TaskSetManager: Finished task 0.0 in stage 3.0 (TID 6) in 168 ms on localhost (2/2)
+22/02/20 18:52:10 INFO scheduler.TaskSchedulerImpl: Removed TaskSet 3.0, whose tasks have all completed, from pool 
+22/02/20 18:52:10 INFO scheduler.DAGScheduler: ResultStage 3 (collect at <stdin>:1) finished in 0.170 s
+22/02/20 18:52:10 INFO scheduler.DAGScheduler: Job 3 finished: collect at <stdin>:1, took 0.179896 s
+[(u'able', u'Jan-01 5'), (u'about', u'Feb-02 3'), (u'about', u'Mar-03 8'), (u'able', u'Apr-04 13'), (u'actor', u'Feb-22 3'), (u'burger', u'Feb-23 5'), (u'burger', u'Mar-08 2'), (u'able', u'Dec-15 100')]
+>>> fileB_joined_fileA = fileB_data.join(fileA_data)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'fileA_data' is not defined
+>>> fileA_data = fileA.map(split_fileA)
+>>> fileA_data.collect()
+22/02/20 18:52:58 INFO spark.SparkContext: Starting job: collect at <stdin>:1
+22/02/20 18:52:58 INFO scheduler.DAGScheduler: Got job 4 (collect at <stdin>:1) with 2 output partitions
+22/02/20 18:52:58 INFO scheduler.DAGScheduler: Final stage: ResultStage 4 (collect at <stdin>:1)
+22/02/20 18:52:58 INFO scheduler.DAGScheduler: Parents of final stage: List()
+22/02/20 18:52:58 INFO scheduler.DAGScheduler: Missing parents: List()
+22/02/20 18:52:58 INFO scheduler.DAGScheduler: Submitting ResultStage 4 (PythonRDD[5] at collect at <stdin>:1), which has no missing parents
+22/02/20 18:52:58 INFO storage.MemoryStore: Block broadcast_6 stored as values in memory (estimated size 4.9 KB, free 279.9 KB)
+22/02/20 18:52:58 INFO storage.MemoryStore: Block broadcast_6_piece0 stored as bytes in memory (estimated size 3.0 KB, free 283.0 KB)
+22/02/20 18:52:58 INFO storage.BlockManagerInfo: Added broadcast_6_piece0 in memory on localhost:40573 (size: 3.0 KB, free: 530.2 MB)
+22/02/20 18:52:58 INFO spark.SparkContext: Created broadcast 6 from broadcast at DAGScheduler.scala:1006
+22/02/20 18:52:58 INFO scheduler.DAGScheduler: Submitting 2 missing tasks from ResultStage 4 (PythonRDD[5] at collect at <stdin>:1)
+22/02/20 18:52:58 INFO scheduler.TaskSchedulerImpl: Adding task set 4.0 with 2 tasks
+22/02/20 18:52:58 INFO scheduler.TaskSetManager: Starting task 0.0 in stage 4.0 (TID 8, localhost, partition 0,ANY, 2169 bytes)
+22/02/20 18:52:58 INFO scheduler.TaskSetManager: Starting task 1.0 in stage 4.0 (TID 9, localhost, partition 1,ANY, 2169 bytes)
+22/02/20 18:52:58 INFO executor.Executor: Running task 0.0 in stage 4.0 (TID 8)
+22/02/20 18:52:58 INFO executor.Executor: Running task 1.0 in stage 4.0 (TID 9)
+22/02/20 18:52:58 INFO rdd.HadoopRDD: Input split: hdfs://quickstart.cloudera:8020/user/cloudera/input/join1_FileA.txt:18+19
+22/02/20 18:52:58 INFO rdd.HadoopRDD: Input split: hdfs://quickstart.cloudera:8020/user/cloudera/input/join1_FileA.txt:0+18
+22/02/20 18:52:58 INFO python.PythonRunner: Times: total = 1, boot = -47660, init = 47661, finish = 0
+22/02/20 18:52:58 INFO executor.Executor: Finished task 1.0 in stage 4.0 (TID 9). 2137 bytes result sent to driver
+22/02/20 18:52:58 INFO scheduler.TaskSetManager: Finished task 1.0 in stage 4.0 (TID 9) in 21 ms on localhost (1/2)
+22/02/20 18:52:58 INFO python.PythonRunner: Times: total = 10, boot = -47656, init = 47665, finish = 1
+22/02/20 18:52:58 INFO executor.Executor: Finished task 0.0 in stage 4.0 (TID 8). 2186 bytes result sent to driver
+22/02/20 18:52:58 INFO scheduler.TaskSetManager: Finished task 0.0 in stage 4.0 (TID 8) in 31 ms on localhost (2/2)
+22/02/20 18:52:58 INFO scheduler.TaskSchedulerImpl: Removed TaskSet 4.0, whose tasks have all completed, from pool 
+22/02/20 18:52:58 INFO scheduler.DAGScheduler: ResultStage 4 (collect at <stdin>:1) finished in 0.033 s
+22/02/20 18:52:58 INFO scheduler.DAGScheduler: Job 4 finished: collect at <stdin>:1, took 0.045198 s
+[(u'able', 991), (u'about', 11), (u'burger', 15), (u'actor', 22)]
+>>> fileB_joined_fileA = fileB_data.join(fileA_data)
+>>> fileB_joined_fileA.collect()
+22/02/20 18:53:22 INFO spark.SparkContext: Starting job: collect at <stdin>:1
+22/02/20 18:53:22 INFO scheduler.DAGScheduler: Registering RDD 10 (join at <stdin>:1)
+22/02/20 18:53:22 INFO scheduler.DAGScheduler: Got job 5 (collect at <stdin>:1) with 4 output partitions
+22/02/20 18:53:22 INFO scheduler.DAGScheduler: Final stage: ResultStage 6 (collect at <stdin>:1)
+22/02/20 18:53:22 INFO scheduler.DAGScheduler: Parents of final stage: List(ShuffleMapStage 5)
+22/02/20 18:53:22 INFO scheduler.DAGScheduler: Missing parents: List(ShuffleMapStage 5)
+22/02/20 18:53:22 INFO scheduler.DAGScheduler: Submitting ShuffleMapStage 5 (PairwiseRDD[10] at join at <stdin>:1), which has no missing parents
+22/02/20 18:53:22 INFO storage.MemoryStore: Block broadcast_7 stored as values in memory (estimated size 11.1 KB, free 294.1 KB)
+22/02/20 18:53:22 INFO storage.MemoryStore: Block broadcast_7_piece0 stored as bytes in memory (estimated size 6.3 KB, free 300.4 KB)
+22/02/20 18:53:22 INFO storage.BlockManagerInfo: Added broadcast_7_piece0 in memory on localhost:40573 (size: 6.3 KB, free: 530.2 MB)
+22/02/20 18:53:22 INFO spark.SparkContext: Created broadcast 7 from broadcast at DAGScheduler.scala:1006
+22/02/20 18:53:22 INFO scheduler.DAGScheduler: Submitting 4 missing tasks from ShuffleMapStage 5 (PairwiseRDD[10] at join at <stdin>:1)
+22/02/20 18:53:22 INFO scheduler.TaskSchedulerImpl: Adding task set 5.0 with 4 tasks
+22/02/20 18:53:22 INFO scheduler.TaskSetManager: Starting task 0.0 in stage 5.0 (TID 10, localhost, partition 0,ANY, 2267 bytes)
+22/02/20 18:53:22 INFO scheduler.TaskSetManager: Starting task 1.0 in stage 5.0 (TID 11, localhost, partition 1,ANY, 2267 bytes)
+22/02/20 18:53:22 INFO scheduler.TaskSetManager: Starting task 2.0 in stage 5.0 (TID 12, localhost, partition 2,ANY, 2267 bytes)
+22/02/20 18:53:22 INFO scheduler.TaskSetManager: Starting task 3.0 in stage 5.0 (TID 13, localhost, partition 3,ANY, 2267 bytes)
+22/02/20 18:53:22 INFO executor.Executor: Running task 0.0 in stage 5.0 (TID 10)
+22/02/20 18:53:22 INFO executor.Executor: Running task 1.0 in stage 5.0 (TID 11)
+22/02/20 18:53:22 INFO executor.Executor: Running task 2.0 in stage 5.0 (TID 12)
+22/02/20 18:53:22 INFO executor.Executor: Running task 3.0 in stage 5.0 (TID 13)
+22/02/20 18:53:22 INFO rdd.HadoopRDD: Input split: hdfs://quickstart.cloudera:8020/user/cloudera/input/join1_FileB.txt:61+61
+22/02/20 18:53:22 INFO rdd.HadoopRDD: Input split: hdfs://quickstart.cloudera:8020/user/cloudera/input/join1_FileB.txt:0+61
+22/02/20 18:53:22 INFO rdd.HadoopRDD: Input split: hdfs://quickstart.cloudera:8020/user/cloudera/input/join1_FileA.txt:0+18
+22/02/20 18:53:22 INFO rdd.HadoopRDD: Input split: hdfs://quickstart.cloudera:8020/user/cloudera/input/join1_FileA.txt:18+19
+22/02/20 18:53:22 INFO python.PythonRunner: Times: total = 7, boot = -23968, init = 23975, finish = 0
+22/02/20 18:53:22 INFO python.PythonRunner: Times: total = 8, boot = -23971, init = 23979, finish = 0
+22/02/20 18:53:22 INFO python.PythonRunner: Times: total = 13, boot = 3, init = 10, finish = 0
+22/02/20 18:53:22 INFO python.PythonRunner: Times: total = 14, boot = 4, init = 10, finish = 0
+22/02/20 18:53:22 INFO python.PythonRunner: Times: total = 25, boot = 7, init = 12, finish = 6
+22/02/20 18:53:22 INFO python.PythonRunner: Times: total = 18, boot = 5, init = 9, finish = 4
+22/02/20 18:53:22 INFO python.PythonRunner: Times: total = 22, boot = 3, init = 14, finish = 5
+22/02/20 18:53:22 INFO python.PythonRunner: Times: total = 25, boot = 4, init = 8, finish = 13
+22/02/20 18:53:22 INFO executor.Executor: Finished task 3.0 in stage 5.0 (TID 13). 2320 bytes result sent to driver
+22/02/20 18:53:22 INFO executor.Executor: Finished task 0.0 in stage 5.0 (TID 10). 2320 bytes result sent to driver
+22/02/20 18:53:22 INFO executor.Executor: Finished task 2.0 in stage 5.0 (TID 12). 2320 bytes result sent to driver
+22/02/20 18:53:22 INFO executor.Executor: Finished task 1.0 in stage 5.0 (TID 11). 2320 bytes result sent to driver
+22/02/20 18:53:22 INFO scheduler.TaskSetManager: Finished task 2.0 in stage 5.0 (TID 12) in 78 ms on localhost (1/4)
+22/02/20 18:53:22 INFO scheduler.TaskSetManager: Finished task 0.0 in stage 5.0 (TID 10) in 82 ms on localhost (2/4)
+22/02/20 18:53:22 INFO scheduler.TaskSetManager: Finished task 3.0 in stage 5.0 (TID 13) in 78 ms on localhost (3/4)
+22/02/20 18:53:22 INFO scheduler.TaskSetManager: Finished task 1.0 in stage 5.0 (TID 11) in 81 ms on localhost (4/4)
+22/02/20 18:53:22 INFO scheduler.TaskSchedulerImpl: Removed TaskSet 5.0, whose tasks have all completed, from pool 
+22/02/20 18:53:22 INFO scheduler.DAGScheduler: ShuffleMapStage 5 (join at <stdin>:1) finished in 0.086 s
+22/02/20 18:53:22 INFO scheduler.DAGScheduler: looking for newly runnable stages
+22/02/20 18:53:22 INFO scheduler.DAGScheduler: running: Set()
+22/02/20 18:53:22 INFO scheduler.DAGScheduler: waiting: Set(ResultStage 6)
+22/02/20 18:53:22 INFO scheduler.DAGScheduler: failed: Set()
+22/02/20 18:53:22 INFO scheduler.DAGScheduler: Submitting ResultStage 6 (PythonRDD[13] at collect at <stdin>:1), which has no missing parents
+22/02/20 18:53:22 INFO storage.MemoryStore: Block broadcast_8 stored as values in memory (estimated size 6.7 KB, free 307.1 KB)
+22/02/20 18:53:22 INFO storage.MemoryStore: Block broadcast_8_piece0 stored as bytes in memory (estimated size 4.2 KB, free 311.4 KB)
+22/02/20 18:53:22 INFO storage.BlockManagerInfo: Added broadcast_8_piece0 in memory on localhost:40573 (size: 4.2 KB, free: 530.2 MB)
+22/02/20 18:53:22 INFO spark.SparkContext: Created broadcast 8 from broadcast at DAGScheduler.scala:1006
+22/02/20 18:53:22 INFO scheduler.DAGScheduler: Submitting 4 missing tasks from ResultStage 6 (PythonRDD[13] at collect at <stdin>:1)
+22/02/20 18:53:22 INFO scheduler.TaskSchedulerImpl: Adding task set 6.0 with 4 tasks
+22/02/20 18:53:22 INFO scheduler.TaskSetManager: Starting task 0.0 in stage 6.0 (TID 14, localhost, partition 0,NODE_LOCAL, 1894 bytes)
+22/02/20 18:53:22 INFO scheduler.TaskSetManager: Starting task 1.0 in stage 6.0 (TID 15, localhost, partition 1,NODE_LOCAL, 1894 bytes)
+22/02/20 18:53:22 INFO scheduler.TaskSetManager: Starting task 2.0 in stage 6.0 (TID 16, localhost, partition 2,NODE_LOCAL, 1894 bytes)
+22/02/20 18:53:22 INFO scheduler.TaskSetManager: Starting task 3.0 in stage 6.0 (TID 17, localhost, partition 3,NODE_LOCAL, 1894 bytes)
+22/02/20 18:53:22 INFO executor.Executor: Running task 0.0 in stage 6.0 (TID 14)
+22/02/20 18:53:22 INFO executor.Executor: Running task 1.0 in stage 6.0 (TID 15)
+22/02/20 18:53:22 INFO executor.Executor: Running task 2.0 in stage 6.0 (TID 16)
+22/02/20 18:53:22 INFO executor.Executor: Running task 3.0 in stage 6.0 (TID 17)
+22/02/20 18:53:22 INFO storage.ShuffleBlockFetcherIterator: Getting 4 non-empty blocks out of 4 blocks
+22/02/20 18:53:22 INFO storage.ShuffleBlockFetcherIterator: Getting 4 non-empty blocks out of 4 blocks
+22/02/20 18:53:22 INFO storage.ShuffleBlockFetcherIterator: Getting 4 non-empty blocks out of 4 blocks
+22/02/20 18:53:22 INFO storage.ShuffleBlockFetcherIterator: Getting 4 non-empty blocks out of 4 blocks
+22/02/20 18:53:22 INFO storage.ShuffleBlockFetcherIterator: Started 0 remote fetches in 4 ms
+22/02/20 18:53:22 INFO storage.ShuffleBlockFetcherIterator: Started 0 remote fetches in 4 ms
+22/02/20 18:53:22 INFO storage.ShuffleBlockFetcherIterator: Started 0 remote fetches in 3 ms
+22/02/20 18:53:22 INFO storage.ShuffleBlockFetcherIterator: Started 0 remote fetches in 3 ms
+22/02/20 18:53:22 INFO python.PythonRunner: Times: total = 8, boot = -78, init = 83, finish = 3
+22/02/20 18:53:22 INFO python.PythonRunner: Times: total = 11, boot = -71, init = 78, finish = 4
+22/02/20 18:53:22 INFO executor.Executor: Finished task 1.0 in stage 6.0 (TID 15). 1326 bytes result sent to driver
+22/02/20 18:53:22 INFO executor.Executor: Finished task 0.0 in stage 6.0 (TID 14). 1358 bytes result sent to driver
+22/02/20 18:53:22 INFO scheduler.TaskSetManager: Finished task 1.0 in stage 6.0 (TID 15) in 37 ms on localhost (1/4)
+22/02/20 18:53:22 INFO scheduler.TaskSetManager: Finished task 0.0 in stage 6.0 (TID 14) in 41 ms on localhost (2/4)
+22/02/20 18:53:22 INFO python.PythonRunner: Times: total = 46, boot = -90, init = 131, finish = 5
+22/02/20 18:53:22 INFO python.PythonRunner: Times: total = 47, boot = -89, init = 131, finish = 5
+22/02/20 18:53:22 INFO executor.Executor: Finished task 2.0 in stage 6.0 (TID 16). 1364 bytes result sent to driver
+22/02/20 18:53:22 INFO executor.Executor: Finished task 3.0 in stage 6.0 (TID 17). 1213 bytes result sent to driver
+22/02/20 18:53:22 INFO scheduler.TaskSetManager: Finished task 2.0 in stage 6.0 (TID 16) in 75 ms on localhost (3/4)
+22/02/20 18:53:22 INFO scheduler.TaskSetManager: Finished task 3.0 in stage 6.0 (TID 17) in 76 ms on localhost (4/4)
+22/02/20 18:53:22 INFO scheduler.TaskSchedulerImpl: Removed TaskSet 6.0, whose tasks have all completed, from pool 
+22/02/20 18:53:22 INFO scheduler.DAGScheduler: ResultStage 6 (collect at <stdin>:1) finished in 0.080 s
+22/02/20 18:53:22 INFO scheduler.DAGScheduler: Job 5 finished: collect at <stdin>:1, took 0.214466 s
+[(u'able', (u'Jan-01 5', 991)), (u'able', (u'Apr-04 13', 991)), (u'able', (u'Dec-15 100', 991)), (u'burger', (u'Feb-23 5', 15)), (u'burger', (u'Mar-08 2', 15)), (u'about', (u'Feb-02 3', 11)), (u'about', (u'Mar-03 8', 11)), (u'actor', (u'Feb-22 3', 22))]
