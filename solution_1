@@ -1,0 +1,1467 @@
+                          [  OK  ]
+[root@quickstart /]# touch wordcount_mapper.py
+[root@quickstart /]# vim wordcount_mapper.py
+[root@quickstart /]# touch wordcount_reducer.py
+[root@quickstart /]# vim wordcount_reducer.py
+[root@quickstart /]# chmod +x wordcount_mapper.py 
+[root@quickstart /]# chmod +x wordcount_reducer.py 
+[root@quickstart /]# pwd 
+/
+[root@quickstart /]#  > echo "A long time ago in a galaxy far far away" > /home/cloudera/testfile1 
+bash: A long time ago in a galaxy far far away: command not found
+[root@quickstart /]#  > echo "A long time ago in a galaxy far far away" > /home/cloudera/testfile1
+bash: A long time ago in a galaxy far far away: command not found
+[root@quickstart /]# echo "A long time ago in a galaxy far far away" > /home/cloudera/testfile1
+[root@quickstart /]# echo "Another episode of Star Wars"                 > /home/cloudera/testfile2 
+[root@quickstart /]# hdfs dfs -mkdir /user/cloudera/input
+[root@quickstart /]# hdfs dfs -put /home/cloudera/testfile1 /user/cloudera/input 
+[root@quickstart /]# hdfs dfs -put /home/cloudera/testfile2 /user/cloudera/input
+[root@quickstart /]# hdfs dfs -ls /user/cloudera/input 
+Found 2 items
+-rw-r--r--   1 root cloudera         41 2022-02-20 13:52 /user/cloudera/input/testfile1
+-rw-r--r--   1 root cloudera         29 2022-02-20 13:52 /user/cloudera/input/testfile2
+[root@quickstart /]# hdfs dfs -cat /user/cloudera/output_new/part-00000
+cat: `/user/cloudera/output_new/part-00000': No such file or directory
+[root@quickstart /]# ls -a
+.     dev          etc    lost+found  packer-files  selinux  usr
+..    .dockerenv   home   media       proc          srv      var
+bin   .dockerinit  lib    mnt         root          sys      wordcount_mapper.py
+boot  echo         lib64  opt         sbin          tmp      wordcount_reducer.py
+[root@quickstart /]# cd usr
+[root@quickstart usr]# la -s
+bash: la: command not found
+[root@quickstart usr]# cd ..
+[root@quickstart /]# cd stc
+bash: cd: stc: No such file or directory
+[root@quickstart /]# ls -a
+.     dev          etc    lost+found  packer-files  selinux  usr
+..    .dockerenv   home   media       proc          srv      var
+bin   .dockerinit  lib    mnt         root          sys      wordcount_mapper.py
+boot  echo         lib64  opt         sbin          tmp      wordcount_reducer.py
+[root@quickstart /]# cd etc
+[root@quickstart etc]# ls -a
+.                        favicon.png       krb5.conf       passwd-         selinux
+..                       filesystems       ld.so.cache     pig             sentry
+adjtime                  flume-ng          ld.so.conf      pkcs11          services
+aliases                  fstab             ld.so.conf.d    pki             sestatus.conf
+alternatives             gai.conf          libaudit.conf   plymouth        shadow
+anacrontab               gcrypt            libuser.conf    pm              shadow-
+at.deny                  gdm               llama           popt.d          shells
+bash_completion.d        gnupg             localtime       ppp             skel
+bashrc                   group             login.defs      printcap        solr
+blkid                    group-            logrotate.conf  profile         spark
+BUILDTIME                gshadow           logrotate.d     profile.d       sqoop
+centos-release           gshadow-          lsb-release     protocols       sqoop2
+chkconfig.d              gssapi_mech.conf  lsb-release.d   .pwd.lock       ssh
+cloudera-scm-agent       hadoop            magic           rc              ssl
+cloudera-scm-server      hadoop-httpfs     mahout          rc0.d           ssmtp
+cron.d                   hadoop-kms        mailcap         rc1.d           statetab
+cron.daily               hbase             mail.rc         rc2.d           statetab.d
+cron.deny                hbase-solr        makedev.d       rc3.d           sudo.conf
+cron.hourly              hive              man.config      rc4.d           sudoers
+cron.monthly             hive-hcatalog     mc              rc5.d           sudoers.d
+crontab                  hive-webhcat      mime.types      rc6.d           sudo-ldap.conf
+cron.weekly              host.conf         modprobe.d      rc.d            sysconfig
+csh.cshrc                hostname          motd            rc.local        sysctl.conf
+csh.login                hosts             mtab            rc.sysinit      system-release
+dbus-1                   hosts.allow       my.cnf          redhat-lsb      system-release-cpe
+default                  hosts.deny        netconfig       redhat-release  terminfo
+depmod.d                 httpd             NetworkManager  resolv.conf     udev
+dhcp                     hue               networks        rpc             vimrc
+DIR_COLORS               impala            nsswitch.conf   rpm             virc
+DIR_COLORS.256color      init              ntp             rsyslog.conf    X11
+DIR_COLORS.lightbgcolor  init.d            ntp.conf        rsyslog.d       xdg
+dracut.conf              inittab           oozie           rwtab           xinetd.d
+dracut.conf.d            inputrc           openldap        rwtab.d         yum
+environment              iproute2          opt             sasl2           yum.conf
+ethers                   issue             pam.d           securetty       yum.repos.d
+exports                  issue.net         passwd          security        zookeeper
+[root@quickstart etc]# cd ..
+[root@quickstart /]# ls -a
+.     dev          etc    lost+found  packer-files  selinux  usr
+..    .dockerenv   home   media       proc          srv      var
+bin   .dockerinit  lib    mnt         root          sys      wordcount_mapper.py
+boot  echo         lib64  opt         sbin          tmp      wordcount_reducer.py
+[root@quickstart /]# cd home 
+[root@quickstart home]# ls -a
+.  ..  cloudera
+[root@quickstart home]# cd cloudera/
+[root@quickstart cloudera]# ls -a
+.             .bash_profile     cm_api.py  Documents                   kerberos  parcels    workspace
+..            .bashrc           .config    enterprise-deployment.json  lib       testfile1
+.bash_logout  cloudera-manager  Desktop    express-deployment.json     .mozilla  testfile2
+[root@quickstart cloudera]# cd ..
+[root@quickstart home]# cd ..
+[root@quickstart /]# ls -a
+.     dev          etc    lost+found  packer-files  selinux  usr
+..    .dockerenv   home   media       proc          srv      var
+bin   .dockerinit  lib    mnt         root          sys      wordcount_mapper.py
+boot  echo         lib64  opt         sbin          tmp      wordcount_reducer.py
+[root@quickstart /]# cd dev 
+[root@quickstart dev]# ls -a
+.                hwrng         mapper  nbd3   ptmx   ram4    tty    tty19  tty3   tty40  tty51  tty62    vcs1
+..               input         mem     nbd4   pts    ram5    tty0   tty2   tty30  tty41  tty52  tty63    vcsa
+cachefiles       kmsg          mqueue  nbd5   ram0   ram6    tty1   tty20  tty31  tty42  tty53  tty7     vcsa1
+console          loop0         nbd0    nbd6   ram1   ram7    tty10  tty21  tty32  tty43  tty54  tty8     vcsu
+core             loop1         nbd1    nbd7   ram10  ram8    tty11  tty22  tty33  tty44  tty55  tty9     vcsu1
+cpu              loop2         nbd10   nbd8   ram11  ram9    tty12  tty23  tty34  tty45  tty56  ttyS0    vda
+cpu_dma_latency  loop3         nbd11   nbd9   ram12  random  tty13  tty24  tty35  tty46  tty57  ttyS1    vda1
+cuse             loop4         nbd12   net    ram13  rtc0    tty14  tty25  tty36  tty47  tty58  ttyS2    vsock
+fd               loop5         nbd13   null   ram14  shm     tty15  tty26  tty37  tty48  tty59  ttyS3    zero
+full             loop6         nbd14   nvram  ram15  stderr  tty16  tty27  tty38  tty49  tty6   uinput
+fuse             loop7         nbd15   port   ram2   stdin   tty17  tty28  tty39  tty5   tty60  urandom
+hpet             loop-control  nbd2    psaux  ram3   stdout  tty18  tty29  tty4   tty50  tty61  vcs
+[root@quickstart dev]# cd ..
+[root@quickstart /]# ls -a
+.     dev          etc    lost+found  packer-files  selinux  usr
+..    .dockerenv   home   media       proc          srv      var
+bin   .dockerinit  lib    mnt         root          sys      wordcount_mapper.py
+boot  echo         lib64  opt         sbin          tmp      wordcount_reducer.py
+[root@quickstart /]# cd boot
+[root@quickstart boot]# ls -a
+.                                         symvers-2.6.32-573.22.1.el6.x86_64.gz
+..                                        System.map-2.6.32-573.22.1.el6.x86_64
+config-2.6.32-573.22.1.el6.x86_64         vmlinuz-2.6.32-573.22.1.el6.x86_64
+grub                                      .vmlinuz-2.6.32-573.22.1.el6.x86_64.hmac
+initramfs-2.6.32-573.22.1.el6.x86_64.img
+[root@quickstart boot]# cd ..
+[root@quickstart /]# cd lib 
+[root@quickstart lib]# ls -a
+.  ..  cpp  firmware  kbd  lsb  modules  security  terminfo  udev
+[root@quickstart lib]# cd ..
+[root@quickstart /]# ls -a
+.     dev          etc    lost+found  packer-files  selinux  usr
+..    .dockerenv   home   media       proc          srv      var
+bin   .dockerinit  lib    mnt         root          sys      wordcount_mapper.py
+boot  echo         lib64  opt         sbin          tmp      wordcount_reducer.py
+[root@quickstart /]# cd lost+found
+[root@quickstart lost+found]# ls -a
+.  ..
+[root@quickstart lost+found]# cd ..
+[root@quickstart /]# cd home 
+[root@quickstart home]# cd cloudera/
+[root@quickstart cloudera]# ls -a
+.             .bash_profile     cm_api.py  Documents                   kerberos  parcels    workspace
+..            .bashrc           .config    enterprise-deployment.json  lib       testfile1
+.bash_logout  cloudera-manager  Desktop    express-deployment.json     .mozilla  testfile2
+[root@quickstart cloudera]# cd cloudera-manager 
+bash: cd: cloudera-manager: Not a directory
+[root@quickstart cloudera]# cd Documents/
+[root@quickstart Documents]# ls -a
+.  ..  cloudera-manager.html  css  img
+[root@quickstart Documents]# cd ..
+[root@quickstart cloudera]# cd Desktop/
+[root@quickstart Desktop]# ls -a
+.  ..  Enterprise.desktop  Express.desktop  Kerberos.desktop  Parcels.desktop
+[root@quickstart Desktop]# cd ..
+[root@quickstart cloudera]# cd .config/
+[root@quickstart .config]# ls -a
+.  ..  autostart
+[root@quickstart .config]# cd ..
+[root@quickstart cloudera]# cd lib
+[root@quickstart lib]# ls -a
+.  ..  hamcrest-all-1.1.jar  junit-4.11.jar  mrunit-0.9.0-incubating-hadoop2.jar
+[root@quickstart lib]# cd ..
+[root@quickstart cloudera]# ls -a
+.             .bash_profile     cm_api.py  Documents                   kerberos  parcels    workspace
+..            .bashrc           .config    enterprise-deployment.json  lib       testfile1
+.bash_logout  cloudera-manager  Desktop    express-deployment.json     .mozilla  testfile2
+[root@quickstart cloudera]# cd workspace/
+[root@quickstart workspace]# ls -a
+.  ..  .DS_Store  .metadata  training
+[root@quickstart workspace]# cd .metadata/
+[root@quickstart .metadata]# ls -a
+.  ..  .lock  .mylyn  .plugins  version.ini
+[root@quickstart .metadata]# cd ..
+[root@quickstart workspace]# cd training/
+[root@quickstart training]# ls -a
+.  ..  bin  .classpath  conf  .project  .settings  src
+[root@quickstart training]# cd ..
+[root@quickstart workspace]# cd ..
+[root@quickstart cloudera]# cd ..
+[root@quickstart home]# cd ..
+[root@quickstart /]# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+>    -input /user/cloudera/input \
+>    -output /user/cloudera/output_new_0 \
+>    -mapper /home/cloudera/wordcount_mapper.py \
+>    -reducer /home/cloudera/wordcount_reducer.py \
+> numReduceTasks 0
+Found 2 unexpected arguments on the command line [numReduceTasks, 0]
+Try -help for more information
+Streaming Command Failed!
+[root@quickstart /]# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+>    -input /user/cloudera/input \
+>    -output /user/cloudera/output_new_0 \
+>    -mapper /wordcount_mapper.py \
+>    -reducer /wordcount_reducer.py \
+>    -numReduceTasks 0
+packageJobJar: [] [/usr/jars/hadoop-streaming-2.6.0-cdh5.7.0.jar] /tmp/streamjob5560665996339648156.jar tmpDir=null
+22/02/20 14:04:07 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 14:04:08 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 14:04:08 INFO mapred.FileInputFormat: Total input paths to process : 2
+22/02/20 14:04:08 INFO mapreduce.JobSubmitter: number of splits:3
+22/02/20 14:04:08 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1645364657674_0001
+22/02/20 14:04:08 INFO impl.YarnClientImpl: Submitted application application_1645364657674_0001
+22/02/20 14:04:08 INFO mapreduce.Job: The url to track the job: http://quickstart.cloudera:8088/proxy/application_1645364657674_0001/
+22/02/20 14:04:08 INFO mapreduce.Job: Running job: job_1645364657674_0001
+22/02/20 14:04:14 INFO mapreduce.Job: Job job_1645364657674_0001 running in uber mode : false
+22/02/20 14:04:14 INFO mapreduce.Job:  map 0% reduce 0%
+22/02/20 14:04:18 INFO mapreduce.Job: Task Id : attempt_1645364657674_0001_m_000000_0, Status : FAILED
+Error: java.lang.RuntimeException: PipeMapRed.waitOutputThreads(): subprocess failed with code 2
+	at org.apache.hadoop.streaming.PipeMapRed.waitOutputThreads(PipeMapRed.java:325)
+	at org.apache.hadoop.streaming.PipeMapRed.mapRedFinished(PipeMapRed.java:538)
+	at org.apache.hadoop.streaming.PipeMapper.close(PipeMapper.java:130)
+	at org.apache.hadoop.mapred.MapRunner.run(MapRunner.java:61)
+	at org.apache.hadoop.streaming.PipeMapRunner.run(PipeMapRunner.java:34)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:453)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+
+22/02/20 14:04:19 INFO mapreduce.Job: Task Id : attempt_1645364657674_0001_m_000001_0, Status : FAILED
+Error: java.lang.RuntimeException: PipeMapRed.waitOutputThreads(): subprocess failed with code 2
+	at org.apache.hadoop.streaming.PipeMapRed.waitOutputThreads(PipeMapRed.java:325)
+	at org.apache.hadoop.streaming.PipeMapRed.mapRedFinished(PipeMapRed.java:538)
+	at org.apache.hadoop.streaming.PipeMapper.close(PipeMapper.java:130)
+	at org.apache.hadoop.mapred.MapRunner.run(MapRunner.java:61)
+	at org.apache.hadoop.streaming.PipeMapRunner.run(PipeMapRunner.java:34)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:453)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+
+22/02/20 14:04:20 INFO mapreduce.Job: Task Id : attempt_1645364657674_0001_m_000002_0, Status : FAILED
+Error: java.lang.RuntimeException: PipeMapRed.waitOutputThreads(): subprocess failed with code 2
+	at org.apache.hadoop.streaming.PipeMapRed.waitOutputThreads(PipeMapRed.java:325)
+	at org.apache.hadoop.streaming.PipeMapRed.mapRedFinished(PipeMapRed.java:538)
+	at org.apache.hadoop.streaming.PipeMapper.close(PipeMapper.java:130)
+	at org.apache.hadoop.mapred.MapRunner.run(MapRunner.java:61)
+	at org.apache.hadoop.streaming.PipeMapRunner.run(PipeMapRunner.java:34)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:453)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+
+22/02/20 14:04:21 INFO mapreduce.Job: Task Id : attempt_1645364657674_0001_m_000000_1, Status : FAILED
+Error: java.lang.RuntimeException: PipeMapRed.waitOutputThreads(): subprocess failed with code 2
+	at org.apache.hadoop.streaming.PipeMapRed.waitOutputThreads(PipeMapRed.java:325)
+	at org.apache.hadoop.streaming.PipeMapRed.mapRedFinished(PipeMapRed.java:538)
+	at org.apache.hadoop.streaming.PipeMapper.close(PipeMapper.java:130)
+	at org.apache.hadoop.mapred.MapRunner.run(MapRunner.java:61)
+	at org.apache.hadoop.streaming.PipeMapRunner.run(PipeMapRunner.java:34)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:453)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+
+22/02/20 14:04:22 INFO mapreduce.Job: Task Id : attempt_1645364657674_0001_m_000001_1, Status : FAILED
+Error: java.lang.RuntimeException: PipeMapRed.waitOutputThreads(): subprocess failed with code 2
+	at org.apache.hadoop.streaming.PipeMapRed.waitOutputThreads(PipeMapRed.java:325)
+	at org.apache.hadoop.streaming.PipeMapRed.mapRedFinished(PipeMapRed.java:538)
+	at org.apache.hadoop.streaming.PipeMapper.close(PipeMapper.java:130)
+	at org.apache.hadoop.mapred.MapRunner.run(MapRunner.java:61)
+	at org.apache.hadoop.streaming.PipeMapRunner.run(PipeMapRunner.java:34)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:453)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+
+22/02/20 14:04:23 INFO mapreduce.Job: Task Id : attempt_1645364657674_0001_m_000002_1, Status : FAILED
+Error: java.lang.RuntimeException: PipeMapRed.waitOutputThreads(): subprocess failed with code 2
+	at org.apache.hadoop.streaming.PipeMapRed.waitOutputThreads(PipeMapRed.java:325)
+	at org.apache.hadoop.streaming.PipeMapRed.mapRedFinished(PipeMapRed.java:538)
+	at org.apache.hadoop.streaming.PipeMapper.close(PipeMapper.java:130)
+	at org.apache.hadoop.mapred.MapRunner.run(MapRunner.java:61)
+	at org.apache.hadoop.streaming.PipeMapRunner.run(PipeMapRunner.java:34)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:453)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+
+22/02/20 14:04:24 INFO mapreduce.Job: Task Id : attempt_1645364657674_0001_m_000000_2, Status : FAILED
+Error: java.lang.RuntimeException: PipeMapRed.waitOutputThreads(): subprocess failed with code 2
+	at org.apache.hadoop.streaming.PipeMapRed.waitOutputThreads(PipeMapRed.java:325)
+	at org.apache.hadoop.streaming.PipeMapRed.mapRedFinished(PipeMapRed.java:538)
+	at org.apache.hadoop.streaming.PipeMapper.close(PipeMapper.java:130)
+	at org.apache.hadoop.mapred.MapRunner.run(MapRunner.java:61)
+	at org.apache.hadoop.streaming.PipeMapRunner.run(PipeMapRunner.java:34)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:453)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+
+22/02/20 14:04:25 INFO mapreduce.Job: Task Id : attempt_1645364657674_0001_m_000001_2, Status : FAILED
+Error: java.lang.RuntimeException: PipeMapRed.waitOutputThreads(): subprocess failed with code 2
+	at org.apache.hadoop.streaming.PipeMapRed.waitOutputThreads(PipeMapRed.java:325)
+	at org.apache.hadoop.streaming.PipeMapRed.mapRedFinished(PipeMapRed.java:538)
+	at org.apache.hadoop.streaming.PipeMapper.close(PipeMapper.java:130)
+	at org.apache.hadoop.mapred.MapRunner.run(MapRunner.java:61)
+	at org.apache.hadoop.streaming.PipeMapRunner.run(PipeMapRunner.java:34)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:453)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+
+22/02/20 14:04:26 INFO mapreduce.Job: Task Id : attempt_1645364657674_0001_m_000002_2, Status : FAILED
+Error: java.lang.RuntimeException: PipeMapRed.waitOutputThreads(): subprocess failed with code 2
+	at org.apache.hadoop.streaming.PipeMapRed.waitOutputThreads(PipeMapRed.java:325)
+	at org.apache.hadoop.streaming.PipeMapRed.mapRedFinished(PipeMapRed.java:538)
+	at org.apache.hadoop.streaming.PipeMapper.close(PipeMapper.java:130)
+	at org.apache.hadoop.mapred.MapRunner.run(MapRunner.java:61)
+	at org.apache.hadoop.streaming.PipeMapRunner.run(PipeMapRunner.java:34)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:453)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+
+22/02/20 14:04:29 INFO mapreduce.Job:  map 100% reduce 0%
+22/02/20 14:04:29 INFO mapreduce.Job: Job job_1645364657674_0001 failed with state FAILED due to: Task failed task_1645364657674_0001_m_000000
+Job failed as tasks failed. failedMaps:1 failedReduces:0
+
+22/02/20 14:04:29 INFO mapreduce.Job: Counters: 13
+	Job Counters 
+		Failed map tasks=10
+		Killed map tasks=2
+		Launched map tasks=12
+		Other local map tasks=9
+		Data-local map tasks=3
+		Total time spent by all maps in occupied slots (ms)=23647
+		Total time spent by all reduces in occupied slots (ms)=0
+		Total time spent by all map tasks (ms)=23647
+		Total vcore-seconds taken by all map tasks=23647
+		Total megabyte-seconds taken by all map tasks=24214528
+	Map-Reduce Framework
+		CPU time spent (ms)=0
+		Physical memory (bytes) snapshot=0
+		Virtual memory (bytes) snapshot=0
+22/02/20 14:04:29 ERROR streaming.StreamJob: Job not successful!
+Streaming Command Failed!
+[root@quickstart /]# hdfs dfs -ls /user/cloudera/input
+Found 2 items
+-rw-r--r--   1 root cloudera         41 2022-02-20 13:52 /user/cloudera/input/testfile1
+-rw-r--r--   1 root cloudera         29 2022-02-20 13:52 /user/cloudera/input/testfile2
+[root@quickstart /]# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+>    -input /user/cloudera/input \
+>    -output /user/cloudera/output_new \
+>    -mapper /home/cloudera/wordcount_mapper.py \
+> hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar    -input /user/cloudera/input    -output /user/cloudera/output_new_0    -mapper /wordcount_mapper.py    -reducer /wordcount_reducer.py    -numReduceTasks 0
+Found 3 unexpected arguments on the command line [hadoop, jar, /usr/lib/hadoop-mapreduce/hadoop-streaming.jar]
+Try -help for more information
+Streaming Command Failed!
+[root@quickstart /]# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+>    -input /user/cloudera/input \
+>    -output /user/cloudera/output_new \
+>    -mapper /wordcount_mapper.py \
+>    -reducer /wordcount_reducer.py
+packageJobJar: [] [/usr/jars/hadoop-streaming-2.6.0-cdh5.7.0.jar] /tmp/streamjob4450789805316866560.jar tmpDir=null
+22/02/20 14:08:27 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 14:08:27 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 14:08:28 INFO mapred.FileInputFormat: Total input paths to process : 2
+22/02/20 14:08:28 INFO mapreduce.JobSubmitter: number of splits:3
+22/02/20 14:08:28 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1645364657674_0002
+22/02/20 14:08:28 INFO impl.YarnClientImpl: Submitted application application_1645364657674_0002
+22/02/20 14:08:28 INFO mapreduce.Job: The url to track the job: http://quickstart.cloudera:8088/proxy/application_1645364657674_0002/
+22/02/20 14:08:28 INFO mapreduce.Job: Running job: job_1645364657674_0002
+22/02/20 14:08:32 INFO mapreduce.Job: Job job_1645364657674_0002 running in uber mode : false
+22/02/20 14:08:32 INFO mapreduce.Job:  map 0% reduce 0%
+22/02/20 14:08:35 INFO mapreduce.Job: Task Id : attempt_1645364657674_0002_m_000000_0, Status : FAILED
+Error: java.lang.RuntimeException: PipeMapRed.waitOutputThreads(): subprocess failed with code 2
+	at org.apache.hadoop.streaming.PipeMapRed.waitOutputThreads(PipeMapRed.java:325)
+	at org.apache.hadoop.streaming.PipeMapRed.mapRedFinished(PipeMapRed.java:538)
+	at org.apache.hadoop.streaming.PipeMapper.close(PipeMapper.java:130)
+	at org.apache.hadoop.mapred.MapRunner.run(MapRunner.java:61)
+	at org.apache.hadoop.streaming.PipeMapRunner.run(PipeMapRunner.java:34)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:453)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+
+22/02/20 14:08:37 INFO mapreduce.Job: Task Id : attempt_1645364657674_0002_m_000001_0, Status : FAILED
+Error: java.lang.RuntimeException: PipeMapRed.waitOutputThreads(): subprocess failed with code 2
+	at org.apache.hadoop.streaming.PipeMapRed.waitOutputThreads(PipeMapRed.java:325)
+	at org.apache.hadoop.streaming.PipeMapRed.mapRedFinished(PipeMapRed.java:538)
+	at org.apache.hadoop.streaming.PipeMapper.close(PipeMapper.java:130)
+	at org.apache.hadoop.mapred.MapRunner.run(MapRunner.java:61)
+	at org.apache.hadoop.streaming.PipeMapRunner.run(PipeMapRunner.java:34)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:453)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+
+22/02/20 14:08:37 INFO mapreduce.Job: Task Id : attempt_1645364657674_0002_m_000002_0, Status : FAILED
+Error: java.lang.RuntimeException: PipeMapRed.waitOutputThreads(): subprocess failed with code 2
+	at org.apache.hadoop.streaming.PipeMapRed.waitOutputThreads(PipeMapRed.java:325)
+	at org.apache.hadoop.streaming.PipeMapRed.mapRedFinished(PipeMapRed.java:538)
+	at org.apache.hadoop.streaming.PipeMapper.close(PipeMapper.java:130)
+	at org.apache.hadoop.mapred.MapRunner.run(MapRunner.java:61)
+	at org.apache.hadoop.streaming.PipeMapRunner.run(PipeMapRunner.java:34)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:453)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+
+22/02/20 14:08:38 INFO mapreduce.Job: Task Id : attempt_1645364657674_0002_m_000000_1, Status : FAILED
+Error: java.lang.RuntimeException: PipeMapRed.waitOutputThreads(): subprocess failed with code 2
+	at org.apache.hadoop.streaming.PipeMapRed.waitOutputThreads(PipeMapRed.java:325)
+	at org.apache.hadoop.streaming.PipeMapRed.mapRedFinished(PipeMapRed.java:538)
+	at org.apache.hadoop.streaming.PipeMapper.close(PipeMapper.java:130)
+	at org.apache.hadoop.mapred.MapRunner.run(MapRunner.java:61)
+	at org.apache.hadoop.streaming.PipeMapRunner.run(PipeMapRunner.java:34)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:453)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+
+22/02/20 14:08:40 INFO mapreduce.Job: Task Id : attempt_1645364657674_0002_m_000001_1, Status : FAILED
+Error: java.lang.RuntimeException: PipeMapRed.waitOutputThreads(): subprocess failed with code 2
+	at org.apache.hadoop.streaming.PipeMapRed.waitOutputThreads(PipeMapRed.java:325)
+	at org.apache.hadoop.streaming.PipeMapRed.mapRedFinished(PipeMapRed.java:538)
+	at org.apache.hadoop.streaming.PipeMapper.close(PipeMapper.java:130)
+	at org.apache.hadoop.mapred.MapRunner.run(MapRunner.java:61)
+	at org.apache.hadoop.streaming.PipeMapRunner.run(PipeMapRunner.java:34)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:453)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+
+22/02/20 14:08:40 INFO mapreduce.Job: Task Id : attempt_1645364657674_0002_m_000002_1, Status : FAILED
+Error: java.lang.RuntimeException: PipeMapRed.waitOutputThreads(): subprocess failed with code 2
+	at org.apache.hadoop.streaming.PipeMapRed.waitOutputThreads(PipeMapRed.java:325)
+	at org.apache.hadoop.streaming.PipeMapRed.mapRedFinished(PipeMapRed.java:538)
+	at org.apache.hadoop.streaming.PipeMapper.close(PipeMapper.java:130)
+	at org.apache.hadoop.mapred.MapRunner.run(MapRunner.java:61)
+	at org.apache.hadoop.streaming.PipeMapRunner.run(PipeMapRunner.java:34)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:453)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+
+22/02/20 14:08:42 INFO mapreduce.Job: Task Id : attempt_1645364657674_0002_m_000000_2, Status : FAILED
+Error: java.lang.RuntimeException: PipeMapRed.waitOutputThreads(): subprocess failed with code 2
+	at org.apache.hadoop.streaming.PipeMapRed.waitOutputThreads(PipeMapRed.java:325)
+	at org.apache.hadoop.streaming.PipeMapRed.mapRedFinished(PipeMapRed.java:538)
+	at org.apache.hadoop.streaming.PipeMapper.close(PipeMapper.java:130)
+	at org.apache.hadoop.mapred.MapRunner.run(MapRunner.java:61)
+	at org.apache.hadoop.streaming.PipeMapRunner.run(PipeMapRunner.java:34)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:453)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+
+22/02/20 14:08:44 INFO mapreduce.Job: Task Id : attempt_1645364657674_0002_m_000001_2, Status : FAILED
+Error: java.lang.RuntimeException: PipeMapRed.waitOutputThreads(): subprocess failed with code 2
+	at org.apache.hadoop.streaming.PipeMapRed.waitOutputThreads(PipeMapRed.java:325)
+	at org.apache.hadoop.streaming.PipeMapRed.mapRedFinished(PipeMapRed.java:538)
+	at org.apache.hadoop.streaming.PipeMapper.close(PipeMapper.java:130)
+	at org.apache.hadoop.mapred.MapRunner.run(MapRunner.java:61)
+	at org.apache.hadoop.streaming.PipeMapRunner.run(PipeMapRunner.java:34)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:453)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+
+22/02/20 14:08:45 INFO mapreduce.Job: Task Id : attempt_1645364657674_0002_m_000002_2, Status : FAILED
+Error: java.lang.RuntimeException: PipeMapRed.waitOutputThreads(): subprocess failed with code 2
+	at org.apache.hadoop.streaming.PipeMapRed.waitOutputThreads(PipeMapRed.java:325)
+	at org.apache.hadoop.streaming.PipeMapRed.mapRedFinished(PipeMapRed.java:538)
+	at org.apache.hadoop.streaming.PipeMapper.close(PipeMapper.java:130)
+	at org.apache.hadoop.mapred.MapRunner.run(MapRunner.java:61)
+	at org.apache.hadoop.streaming.PipeMapRunner.run(PipeMapRunner.java:34)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:453)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+
+22/02/20 14:08:47 INFO mapreduce.Job:  map 100% reduce 100%
+22/02/20 14:08:47 INFO mapreduce.Job: Job job_1645364657674_0002 failed with state FAILED due to: Task failed task_1645364657674_0002_m_000000
+Job failed as tasks failed. failedMaps:1 failedReduces:0
+
+22/02/20 14:08:47 INFO mapreduce.Job: Counters: 13
+	Job Counters 
+		Failed map tasks=10
+		Killed map tasks=2
+		Launched map tasks=12
+		Other local map tasks=9
+		Data-local map tasks=3
+		Total time spent by all maps in occupied slots (ms)=23375
+		Total time spent by all reduces in occupied slots (ms)=0
+		Total time spent by all map tasks (ms)=23375
+		Total vcore-seconds taken by all map tasks=23375
+		Total megabyte-seconds taken by all map tasks=23936000
+	Map-Reduce Framework
+		CPU time spent (ms)=0
+		Physical memory (bytes) snapshot=0
+		Virtual memory (bytes) snapshot=0
+22/02/20 14:08:47 ERROR streaming.StreamJob: Job not successful!
+Streaming Command Failed!
+[root@quickstart /]# hdfs dfs -cat /user/cloudera/output_new/part-00000
+cat: `/user/cloudera/output_new/part-00000': No such file or directory
+[root@quickstart /]# hdfs dfs -mkdir /user/cloudera/output_new
+mkdir: `/user/cloudera/output_new': File exists
+[root@quickstart /]# hdfs dfs -ls /user/cloudera/output_new/
+[root@quickstart /]# hdfs dfs -mkdir /user/cloudera/output_new/
+mkdir: `/user/cloudera/output_new': File exists
+[root@quickstart /]# ls -a
+.     dev          etc    lost+found  packer-files  selinux  usr
+..    .dockerenv   home   media       proc          srv      var
+bin   .dockerinit  lib    mnt         root          sys      wordcount_mapper.py
+boot  echo         lib64  opt         sbin          tmp      wordcount_reducer.py
+[root@quickstart /]# cat wordcount_mapper.py
+bove just indicates to use python to intepret this file
+
+# ---------------------------------------------------------------
+#This mapper code will input a line of text and output <word, 1>
+# 
+# ---------------------------------------------------------------
+
+import sys             #a python module with system functions for this OS
+
+# ------------------------------------------------------------
+#  this 'for loop' will set 'line' to an input line from system 
+#    standard input file
+# ------------------------------------------------------------
+for line in sys.stdin:  
+
+#-----------------------------------
+#sys.stdin call 'sys' to read a line from standard input, 
+# note that 'line' is a string object, ie variable, and it has methods that you can apply to it,
+# as in the next line
+# ---------------------------------
+    line = line.strip()  #strip is a method, ie function, associated
+                         #  with string variable, it will strip 
+                         #   the carriage return (by default)
+    keys = line.split()  #split line at blanks (by default), 
+                         #   and return a list of keys
+    for key in keys:     #a for loop through the list of keys
+        value = 1        
+        print('{0}\t{1}'.format(key, value) ) #the {} is replaced by 0th,1st items in format list
+                            #also, note that the Hadoop default is 'tab' separates key from the value
+
+[root@quickstart /]# rm wordcount_mapper.py
+rm: remove regular file `wordcount_mapper.py'? yes
+[root@quickstart /]# ls -a
+.    boot        .dockerinit  home   lost+found  opt           root     srv  usr
+..   dev         echo         lib    media       packer-files  sbin     sys  var
+bin  .dockerenv  etc          lib64  mnt         proc          selinux  tmp  wordcount_reducer.py
+[root@quickstart /]# touch wordcount_mapper.py
+[root@quickstart /]# vim wordcount_mapper.py
+[root@quickstart /]# cat wordcount_reducer.py
+s reducer code will input a line of text and 
+#    output <word, total-count>
+# ---------------------------------------------------------------
+import sys
+
+last_key      = None              #initialize these variables
+running_total = 0
+
+# -----------------------------------
+# Loop thru file
+#  --------------------------------
+for input_line in sys.stdin:
+    input_line = input_line.strip()
+
+    # --------------------------------
+    # Get Next Word    # --------------------------------
+    this_key, value = input_line.split("\t", 1)  #the Hadoop default is tab separates key value
+                          #the split command returns a list of strings, in this case into 2 variables
+    value = int(value)           #int() will convert a string to integer (this program does no error checking)
+ 
+    # ---------------------------------
+    # Key Check part
+    #    if this current key is same 
+    #          as the last one Consolidate
+    #    otherwise  Emit
+    # ---------------------------------
+    if last_key == this_key:     #check if key has changed ('==' is                                   #      logical equalilty check
+        running_total += value   # add value to running total
+
+    else:
+        if last_key:             #if this key that was just read in
+                                 #   is different, and the previous 
+                                 #   (ie last) key is not empy,
+                                 #   then output 
+                                 #   the previous <key running-count>
+            print( "{0}\t{1}".format(last_key, running_total) )
+                                 # hadoop expects tab(ie '\t') 
+                                 #    separation
+        running_total = value    #reset values
+        last_key = this_key
+
+if last_key == this_key:
+    print( "{0}\t{1}".format(last_key, running_total)) 
+[root@quickstart /]# cat wordcount_mapper.py
+#!/usr/bin/env python 
+#the above just indicates to use python to intepret this file
+
+# ---------------------------------------------------------------
+#This mapper code will input a line of text and output <word, 1>
+# 
+# ---------------------------------------------------------------
+
+import sys             #a python module with system functions for this OS
+
+# ------------------------------------------------------------
+#  this 'for loop' will set 'line' to an input line from system 
+#    standard input file
+# ------------------------------------------------------------
+for line in sys.stdin:  
+
+#-----------------------------------
+#sys.stdin call 'sys' to read a line from standard input, 
+# note that 'line' is a string object, ie variable, and it has methods that you can apply to it,
+# as in the next line
+# ---------------------------------
+    line = line.strip()  #strip is a method, ie function, associated
+                         #  with string variable, it will strip 
+                         #   the carriage return (by default)
+    keys = line.split()  #split line at blanks (by default), 
+                         #   and return a list of keys
+    for key in keys:     #a for loop through the list of keys
+        value = 1        
+        print('{0}\t{1}'.format(key, value) ) #the {} is replaced by 0th,1st items in format list
+                            #also, note that the Hadoop default is 'tab' separates key from the value
+
+[root@quickstart /]# ls -a
+.     dev          etc    lost+found  packer-files  selinux  usr
+..    .dockerenv   home   media       proc          srv      var
+bin   .dockerinit  lib    mnt         root          sys      wordcount_mapper.py
+boot  echo         lib64  opt         sbin          tmp      wordcount_reducer.py
+[root@quickstart /]# rm wordcount_reducer.py
+rm: remove regular file `wordcount_reducer.py'? yes
+[root@quickstart /]# touch wordcount_reducer.py
+[root@quickstart /]# vim wordcount_reducer.py
+[root@quickstart /]# ls -a
+.     dev          etc    lost+found  packer-files  selinux  usr
+..    .dockerenv   home   media       proc          srv      var
+bin   .dockerinit  lib    mnt         root          sys      wordcount_mapper.py
+boot  echo         lib64  opt         sbin          tmp      wordcount_reducer.py
+[root@quickstart /]# chmod +x wordcount_mapper.py
+[root@quickstart /]# chmod +x wordcount_reducer.py 
+[root@quickstart /]# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+>    -input /user/cloudera/input \
+>    -output /user/cloudera/output_new \
+>    -mapper /wordcount_mapper.py \
+>    -reducer /wordcount_reducer.py
+packageJobJar: [] [/usr/jars/hadoop-streaming-2.6.0-cdh5.7.0.jar] /tmp/streamjob3452672994628220849.jar tmpDir=null
+22/02/20 14:18:06 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 14:18:06 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 14:18:06 WARN security.UserGroupInformation: PriviledgedActionException as:root (auth:SIMPLE) cause:org.apache.hadoop.mapred.FileAlreadyExistsException: Output directory hdfs://quickstart.cloudera:8020/user/cloudera/output_new already exists
+22/02/20 14:18:06 WARN security.UserGroupInformation: PriviledgedActionException as:root (auth:SIMPLE) cause:org.apache.hadoop.mapred.FileAlreadyExistsException: Output directory hdfs://quickstart.cloudera:8020/user/cloudera/output_new already exists
+22/02/20 14:18:06 ERROR streaming.StreamJob: Error Launching job : Output directory hdfs://quickstart.cloudera:8020/user/cloudera/output_new already exists
+Streaming Command Failed!
+[root@quickstart /]# hdfs dfs -rm -r /user/cloudera/output_new
+Deleted /user/cloudera/output_new
+[root@quickstart /]# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+>    -input /user/cloudera/input \
+>    -output /user/cloudera/output_new \
+>    -mapper /home/cloudera/wordcount_mapper.py \
+>    -reducer /home/cloudera/wordcount_reducer.py
+packageJobJar: [] [/usr/jars/hadoop-streaming-2.6.0-cdh5.7.0.jar] /tmp/streamjob6809305579016005606.jar tmpDir=null
+22/02/20 14:20:23 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 14:20:23 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 14:20:23 INFO mapred.FileInputFormat: Total input paths to process : 2
+22/02/20 14:20:23 INFO mapreduce.JobSubmitter: number of splits:3
+22/02/20 14:20:23 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1645364657674_0003
+22/02/20 14:20:24 INFO impl.YarnClientImpl: Submitted application application_1645364657674_0003
+22/02/20 14:20:24 INFO mapreduce.Job: The url to track the job: http://quickstart.cloudera:8088/proxy/application_1645364657674_0003/
+22/02/20 14:20:24 INFO mapreduce.Job: Running job: job_1645364657674_0003
+22/02/20 14:20:29 INFO mapreduce.Job: Job job_1645364657674_0003 running in uber mode : false
+22/02/20 14:20:29 INFO mapreduce.Job:  map 0% reduce 0%
+22/02/20 14:20:32 INFO mapreduce.Job: Task Id : attempt_1645364657674_0003_m_000000_0, Status : FAILED
+Error: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:449)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 9 more
+Caused by: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapRunner.configure(MapRunner.java:38)
+	... 14 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 17 more
+Caused by: java.lang.RuntimeException: configuration exception
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:221)
+	at org.apache.hadoop.streaming.PipeMapper.configure(PipeMapper.java:66)
+	... 22 more
+Caused by: java.io.IOException: Cannot run program "/home/cloudera/wordcount_mapper.py": error=2, No such file or directory
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1047)
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:208)
+	... 23 more
+Caused by: java.io.IOException: error=2, No such file or directory
+	at java.lang.UNIXProcess.forkAndExec(Native Method)
+	at java.lang.UNIXProcess.<init>(UNIXProcess.java:186)
+	at java.lang.ProcessImpl.start(ProcessImpl.java:130)
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1028)
+	... 24 more
+
+22/02/20 14:20:33 INFO mapreduce.Job: Task Id : attempt_1645364657674_0003_m_000001_0, Status : FAILED
+Error: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:449)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 9 more
+Caused by: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapRunner.configure(MapRunner.java:38)
+	... 14 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 17 more
+Caused by: java.lang.RuntimeException: configuration exception
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:221)
+	at org.apache.hadoop.streaming.PipeMapper.configure(PipeMapper.java:66)
+	... 22 more
+Caused by: java.io.IOException: Cannot run program "/home/cloudera/wordcount_mapper.py": error=2, No such file or directory
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1047)
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:208)
+	... 23 more
+Caused by: java.io.IOException: error=2, No such file or directory
+	at java.lang.UNIXProcess.forkAndExec(Native Method)
+	at java.lang.UNIXProcess.<init>(UNIXProcess.java:186)
+	at java.lang.ProcessImpl.start(ProcessImpl.java:130)
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1028)
+	... 24 more
+
+22/02/20 14:20:34 INFO mapreduce.Job: Task Id : attempt_1645364657674_0003_m_000002_0, Status : FAILED
+Error: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:449)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 9 more
+Caused by: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapRunner.configure(MapRunner.java:38)
+	... 14 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 17 more
+Caused by: java.lang.RuntimeException: configuration exception
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:221)
+	at org.apache.hadoop.streaming.PipeMapper.configure(PipeMapper.java:66)
+	... 22 more
+Caused by: java.io.IOException: Cannot run program "/home/cloudera/wordcount_mapper.py": error=2, No such file or directory
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1047)
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:208)
+	... 23 more
+Caused by: java.io.IOException: error=2, No such file or directory
+	at java.lang.UNIXProcess.forkAndExec(Native Method)
+	at java.lang.UNIXProcess.<init>(UNIXProcess.java:186)
+	at java.lang.ProcessImpl.start(ProcessImpl.java:130)
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1028)
+	... 24 more
+
+22/02/20 14:20:35 INFO mapreduce.Job: Task Id : attempt_1645364657674_0003_m_000000_1, Status : FAILED
+Error: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:449)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 9 more
+Caused by: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapRunner.configure(MapRunner.java:38)
+	... 14 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 17 more
+Caused by: java.lang.RuntimeException: configuration exception
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:221)
+	at org.apache.hadoop.streaming.PipeMapper.configure(PipeMapper.java:66)
+	... 22 more
+Caused by: java.io.IOException: Cannot run program "/home/cloudera/wordcount_mapper.py": error=2, No such file or directory
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1047)
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:208)
+	... 23 more
+Caused by: java.io.IOException: error=2, No such file or directory
+	at java.lang.UNIXProcess.forkAndExec(Native Method)
+	at java.lang.UNIXProcess.<init>(UNIXProcess.java:186)
+	at java.lang.ProcessImpl.start(ProcessImpl.java:130)
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1028)
+	... 24 more
+
+22/02/20 14:20:36 INFO mapreduce.Job: Task Id : attempt_1645364657674_0003_m_000001_1, Status : FAILED
+Error: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:449)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 9 more
+Caused by: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapRunner.configure(MapRunner.java:38)
+	... 14 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 17 more
+Caused by: java.lang.RuntimeException: configuration exception
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:221)
+	at org.apache.hadoop.streaming.PipeMapper.configure(PipeMapper.java:66)
+	... 22 more
+Caused by: java.io.IOException: Cannot run program "/home/cloudera/wordcount_mapper.py": error=2, No such file or directory
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1047)
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:208)
+	... 23 more
+Caused by: java.io.IOException: error=2, No such file or directory
+	at java.lang.UNIXProcess.forkAndExec(Native Method)
+	at java.lang.UNIXProcess.<init>(UNIXProcess.java:186)
+	at java.lang.ProcessImpl.start(ProcessImpl.java:130)
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1028)
+	... 24 more
+
+22/02/20 14:20:37 INFO mapreduce.Job: Task Id : attempt_1645364657674_0003_m_000002_1, Status : FAILED
+Error: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:449)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 9 more
+Caused by: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapRunner.configure(MapRunner.java:38)
+	... 14 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 17 more
+Caused by: java.lang.RuntimeException: configuration exception
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:221)
+	at org.apache.hadoop.streaming.PipeMapper.configure(PipeMapper.java:66)
+	... 22 more
+Caused by: java.io.IOException: Cannot run program "/home/cloudera/wordcount_mapper.py": error=2, No such file or directory
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1047)
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:208)
+	... 23 more
+Caused by: java.io.IOException: error=2, No such file or directory
+	at java.lang.UNIXProcess.forkAndExec(Native Method)
+	at java.lang.UNIXProcess.<init>(UNIXProcess.java:186)
+	at java.lang.ProcessImpl.start(ProcessImpl.java:130)
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1028)
+	... 24 more
+
+22/02/20 14:20:39 INFO mapreduce.Job: Task Id : attempt_1645364657674_0003_m_000000_2, Status : FAILED
+Error: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:449)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 9 more
+Caused by: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapRunner.configure(MapRunner.java:38)
+	... 14 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 17 more
+Caused by: java.lang.RuntimeException: configuration exception
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:221)
+	at org.apache.hadoop.streaming.PipeMapper.configure(PipeMapper.java:66)
+	... 22 more
+Caused by: java.io.IOException: Cannot run program "/home/cloudera/wordcount_mapper.py": error=2, No such file or directory
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1047)
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:208)
+	... 23 more
+Caused by: java.io.IOException: error=2, No such file or directory
+	at java.lang.UNIXProcess.forkAndExec(Native Method)
+	at java.lang.UNIXProcess.<init>(UNIXProcess.java:186)
+	at java.lang.ProcessImpl.start(ProcessImpl.java:130)
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1028)
+	... 24 more
+
+22/02/20 14:20:40 INFO mapreduce.Job: Task Id : attempt_1645364657674_0003_m_000001_2, Status : FAILED
+Error: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:449)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 9 more
+Caused by: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapRunner.configure(MapRunner.java:38)
+	... 14 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 17 more
+Caused by: java.lang.RuntimeException: configuration exception
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:221)
+	at org.apache.hadoop.streaming.PipeMapper.configure(PipeMapper.java:66)
+	... 22 more
+Caused by: java.io.IOException: Cannot run program "/home/cloudera/wordcount_mapper.py": error=2, No such file or directory
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1047)
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:208)
+	... 23 more
+Caused by: java.io.IOException: error=2, No such file or directory
+	at java.lang.UNIXProcess.forkAndExec(Native Method)
+	at java.lang.UNIXProcess.<init>(UNIXProcess.java:186)
+	at java.lang.ProcessImpl.start(ProcessImpl.java:130)
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1028)
+	... 24 more
+
+22/02/20 14:20:41 INFO mapreduce.Job: Task Id : attempt_1645364657674_0003_m_000002_2, Status : FAILED
+Error: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapTask.runOldMapper(MapTask.java:449)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:343)
+	at org.apache.hadoop.mapred.YarnChild$2.run(YarnChild.java:164)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1693)
+	at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:158)
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 9 more
+Caused by: java.lang.RuntimeException: Error in configuring object
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:109)
+	at org.apache.hadoop.util.ReflectionUtils.setConf(ReflectionUtils.java:75)
+	at org.apache.hadoop.util.ReflectionUtils.newInstance(ReflectionUtils.java:133)
+	at org.apache.hadoop.mapred.MapRunner.configure(MapRunner.java:38)
+	... 14 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ReflectionUtils.setJobConf(ReflectionUtils.java:106)
+	... 17 more
+Caused by: java.lang.RuntimeException: configuration exception
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:221)
+	at org.apache.hadoop.streaming.PipeMapper.configure(PipeMapper.java:66)
+	... 22 more
+Caused by: java.io.IOException: Cannot run program "/home/cloudera/wordcount_mapper.py": error=2, No such file or directory
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1047)
+	at org.apache.hadoop.streaming.PipeMapRed.configure(PipeMapRed.java:208)
+	... 23 more
+Caused by: java.io.IOException: error=2, No such file or directory
+	at java.lang.UNIXProcess.forkAndExec(Native Method)
+	at java.lang.UNIXProcess.<init>(UNIXProcess.java:186)
+	at java.lang.ProcessImpl.start(ProcessImpl.java:130)
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1028)
+	... 24 more
+
+22/02/20 14:20:43 INFO mapreduce.Job:  map 100% reduce 100%
+22/02/20 14:20:43 INFO mapreduce.Job: Job job_1645364657674_0003 failed with state FAILED due to: Task failed task_1645364657674_0003_m_000000
+Job failed as tasks failed. failedMaps:1 failedReduces:0
+
+22/02/20 14:20:43 INFO mapreduce.Job: Counters: 13
+	Job Counters 
+		Failed map tasks=10
+		Killed map tasks=2
+		Launched map tasks=12
+		Other local map tasks=9
+		Data-local map tasks=3
+		Total time spent by all maps in occupied slots (ms)=21761
+		Total time spent by all reduces in occupied slots (ms)=0
+		Total time spent by all map tasks (ms)=21761
+		Total vcore-seconds taken by all map tasks=21761
+		Total megabyte-seconds taken by all map tasks=22283264
+	Map-Reduce Framework
+		CPU time spent (ms)=0
+		Physical memory (bytes) snapshot=0
+		Virtual memory (bytes) snapshot=0
+22/02/20 14:20:43 ERROR streaming.StreamJob: Job not successful!
+Streaming Command Failed!
+[root@quickstart /]# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+>    -input /user/cloudera/input \
+>    -output /user/cloudera/output_new \
+>    -mapper /wordcount_mapper.py \
+>    -reducer /wordcount_reducer.py
+packageJobJar: [] [/usr/jars/hadoop-streaming-2.6.0-cdh5.7.0.jar] /tmp/streamjob6549133416388814881.jar tmpDir=null
+22/02/20 14:20:55 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 14:20:56 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 14:20:56 WARN security.UserGroupInformation: PriviledgedActionException as:root (auth:SIMPLE) cause:org.apache.hadoop.mapred.FileAlreadyExistsException: Output directory hdfs://quickstart.cloudera:8020/user/cloudera/output_new already exists
+22/02/20 14:20:56 WARN security.UserGroupInformation: PriviledgedActionException as:root (auth:SIMPLE) cause:org.apache.hadoop.mapred.FileAlreadyExistsException: Output directory hdfs://quickstart.cloudera:8020/user/cloudera/output_new already exists
+22/02/20 14:20:56 ERROR streaming.StreamJob: Error Launching job : Output directory hdfs://quickstart.cloudera:8020/user/cloudera/output_new already exists
+Streaming Command Failed!
+[root@quickstart /]# hdfs dfs -rm -r /user/cloudera/output_new
+Deleted /user/cloudera/output_new
+[root@quickstart /]# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+>    -input /user/cloudera/input \
+>    -output /user/cloudera/output_new \
+>    -mapper /wordcount_mapper.py \
+>    -reducer /wordcount_reducer.py
+packageJobJar: [] [/usr/jars/hadoop-streaming-2.6.0-cdh5.7.0.jar] /tmp/streamjob2906730788468538234.jar tmpDir=null
+22/02/20 14:21:12 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 14:21:12 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 14:21:13 INFO mapred.FileInputFormat: Total input paths to process : 2
+22/02/20 14:21:13 INFO mapreduce.JobSubmitter: number of splits:3
+22/02/20 14:21:13 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1645364657674_0004
+22/02/20 14:21:13 INFO impl.YarnClientImpl: Submitted application application_1645364657674_0004
+22/02/20 14:21:13 INFO mapreduce.Job: The url to track the job: http://quickstart.cloudera:8088/proxy/application_1645364657674_0004/
+22/02/20 14:21:13 INFO mapreduce.Job: Running job: job_1645364657674_0004
+22/02/20 14:21:17 INFO mapreduce.Job: Job job_1645364657674_0004 running in uber mode : false
+22/02/20 14:21:17 INFO mapreduce.Job:  map 0% reduce 0%
+22/02/20 14:21:21 INFO mapreduce.Job:  map 33% reduce 0%
+22/02/20 14:21:22 INFO mapreduce.Job:  map 67% reduce 0%
+22/02/20 14:21:23 INFO mapreduce.Job:  map 100% reduce 0%
+22/02/20 14:21:27 INFO mapreduce.Job:  map 100% reduce 100%
+22/02/20 14:21:27 INFO mapreduce.Job: Job job_1645364657674_0004 completed successfully
+22/02/20 14:21:27 INFO mapreduce.Job: Counters: 49
+	File System Counters
+		FILE: Number of bytes read=136
+		FILE: Number of bytes written=462777
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=415
+		HDFS: Number of bytes written=94
+		HDFS: Number of read operations=12
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=2
+	Job Counters 
+		Launched map tasks=3
+		Launched reduce tasks=1
+		Data-local map tasks=3
+		Total time spent by all maps in occupied slots (ms)=6146
+		Total time spent by all reduces in occupied slots (ms)=2176
+		Total time spent by all map tasks (ms)=6146
+		Total time spent by all reduce tasks (ms)=2176
+		Total vcore-seconds taken by all map tasks=6146
+		Total vcore-seconds taken by all reduce tasks=2176
+		Total megabyte-seconds taken by all map tasks=6293504
+		Total megabyte-seconds taken by all reduce tasks=2228224
+	Map-Reduce Framework
+		Map input records=2
+		Map output records=15
+		Map output bytes=100
+		Map output materialized bytes=148
+		Input split bytes=339
+		Combine input records=0
+		Combine output records=0
+		Reduce input groups=14
+		Reduce shuffle bytes=148
+		Reduce input records=15
+		Reduce output records=14
+		Spilled Records=30
+		Shuffled Maps =3
+		Failed Shuffles=0
+		Merged Map outputs=3
+		GC time elapsed (ms)=80
+		CPU time spent (ms)=1710
+		Physical memory (bytes) snapshot=877572096
+		Virtual memory (bytes) snapshot=5490696192
+		Total committed heap usage (bytes)=831520768
+	Shuffle Errors
+		BAD_ID=0
+		CONNECTION=0
+		IO_ERROR=0
+		WRONG_LENGTH=0
+		WRONG_MAP=0
+		WRONG_REDUCE=0
+	File Input Format Counters 
+		Bytes Read=76
+	File Output Format Counters 
+		Bytes Written=94
+22/02/20 14:21:27 INFO streaming.StreamJob: Output directory: /user/cloudera/output_new
+[root@quickstart /]# hdfs dfs -cat /user/cloudera/output_new/part-00000
+A	1
+Another	1
+Star	1
+Wars	1
+a	1
+ago	1
+away	1
+episode	1
+far	2
+galaxy	1
+in	1
+long	1
+of	1
+time	1
+[root@quickstart /]# hdfs dfs -ls /user/cloudera/output_new 
+Found 2 items
+-rw-r--r--   1 root cloudera          0 2022-02-20 14:21 /user/cloudera/output_new/_SUCCESS
+-rw-r--r--   1 root cloudera         94 2022-02-20 14:21 /user/cloudera/output_new/part-00000
+[root@quickstart /]# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+>    -input /user/cloudera/input \
+>    -output /user/cloudera/output_new_0 \
+>    -mapper /wordcount_mapper.py \
+>    -reducer /wordcount_reducer.py \
+>    -numReduceTasks 0
+packageJobJar: [] [/usr/jars/hadoop-streaming-2.6.0-cdh5.7.0.jar] /tmp/streamjob3195728814751382296.jar tmpDir=null
+22/02/20 14:23:23 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 14:23:23 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 14:23:23 WARN security.UserGroupInformation: PriviledgedActionException as:root (auth:SIMPLE) cause:org.apache.hadoop.mapred.FileAlreadyExistsException: Output directory hdfs://quickstart.cloudera:8020/user/cloudera/output_new_0 already exists
+22/02/20 14:23:23 WARN security.UserGroupInformation: PriviledgedActionException as:root (auth:SIMPLE) cause:org.apache.hadoop.mapred.FileAlreadyExistsException: Output directory hdfs://quickstart.cloudera:8020/user/cloudera/output_new_0 already exists
+22/02/20 14:23:23 ERROR streaming.StreamJob: Error Launching job : Output directory hdfs://quickstart.cloudera:8020/user/cloudera/output_new_0 already exists
+Streaming Command Failed!
+[root@quickstart /]# hdfs dfs -rm -r /user/cloudera/output_new_0
+Deleted /user/cloudera/output_new_0
+[root@quickstart /]# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+>    -input /user/cloudera/input \
+>    -output /user/cloudera/output_new_0 \
+>    -mapper /wordcount_mapper.py \
+>    -reducer /wordcount_reducer.py \
+>    -numReduceTasks 0
+packageJobJar: [] [/usr/jars/hadoop-streaming-2.6.0-cdh5.7.0.jar] /tmp/streamjob8582742980032363718.jar tmpDir=null
+22/02/20 14:24:29 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 14:24:29 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 14:24:29 INFO mapred.FileInputFormat: Total input paths to process : 2
+22/02/20 14:24:29 INFO mapreduce.JobSubmitter: number of splits:3
+22/02/20 14:24:29 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1645364657674_0005
+22/02/20 14:24:30 INFO impl.YarnClientImpl: Submitted application application_1645364657674_0005
+22/02/20 14:24:30 INFO mapreduce.Job: The url to track the job: http://quickstart.cloudera:8088/proxy/application_1645364657674_0005/
+22/02/20 14:24:30 INFO mapreduce.Job: Running job: job_1645364657674_0005
+22/02/20 14:24:35 INFO mapreduce.Job: Job job_1645364657674_0005 running in uber mode : false
+22/02/20 14:24:35 INFO mapreduce.Job:  map 0% reduce 0%
+22/02/20 14:24:39 INFO mapreduce.Job:  map 33% reduce 0%
+22/02/20 14:24:40 INFO mapreduce.Job:  map 67% reduce 0%
+22/02/20 14:24:41 INFO mapreduce.Job:  map 100% reduce 0%
+22/02/20 14:24:41 INFO mapreduce.Job: Job job_1645364657674_0005 completed successfully
+22/02/20 14:24:41 INFO mapreduce.Job: Counters: 30
+	File System Counters
+		FILE: Number of bytes read=0
+		FILE: Number of bytes written=345834
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=415
+		HDFS: Number of bytes written=100
+		HDFS: Number of read operations=15
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=6
+	Job Counters 
+		Launched map tasks=3
+		Data-local map tasks=3
+		Total time spent by all maps in occupied slots (ms)=6373
+		Total time spent by all reduces in occupied slots (ms)=0
+		Total time spent by all map tasks (ms)=6373
+		Total vcore-seconds taken by all map tasks=6373
+		Total megabyte-seconds taken by all map tasks=6525952
+	Map-Reduce Framework
+		Map input records=2
+		Map output records=15
+		Input split bytes=339
+		Spilled Records=0
+		Failed Shuffles=0
+		Merged Map outputs=0
+		GC time elapsed (ms)=51
+		CPU time spent (ms)=1260
+		Physical memory (bytes) snapshot=537399296
+		Virtual memory (bytes) snapshot=4097912832
+		Total committed heap usage (bytes)=607125504
+	File Input Format Counters 
+		Bytes Read=76
+	File Output Format Counters 
+		Bytes Written=100
+22/02/20 14:24:41 INFO streaming.StreamJob: Output directory: /user/cloudera/output_new_0
+[root@quickstart /]# hdfs dfs -getmerge /user/cloudera/output_new_0/*  wordcount_num0_output.txt
+[root@quickstart /]# ls -a
+.    boot        .dockerinit  home   lost+found  opt           root     srv  usr                  wordcount_num0_output.txt
+..   dev         echo         lib    media       packer-files  sbin     sys  var                  .wordcount_num0_output.txt.crc
+bin  .dockerenv  etc          lib64  mnt         proc          selinux  tmp  wordcount_mapper.py  wordcount_reducer.py
+[root@quickstart /]# cat wordcount_num0_output.txt
+A	1
+long	1
+time	1
+ago	1
+in	1
+a	1
+galaxy	1
+far	1
+far	1
+away	1
+Another	1
+episode	1
+of	1
+Star	1
+Wars	1
+[root@quickstart /]# cd .wordcount_num0_output.txt.crc
+bash: cd: .wordcount_num0_output.txt.crc: Not a directory
+[root@quickstart /]# cat .wordcount_num0_output.txt.crc
+crcæ?[root@quickstart /]# hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+>    -input /user/cloudera/input \
+>    -output /user/cloudera/output_new_1 \
+>    -mapper /wordcount_mapper.py \
+>    -reducer /wordcount_reducer.py \
+>    -numReduceTasks 2
+packageJobJar: [] [/usr/jars/hadoop-streaming-2.6.0-cdh5.7.0.jar] /tmp/streamjob887818234760172401.jar tmpDir=null
+22/02/20 14:37:04 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 14:37:05 INFO client.RMProxy: Connecting to ResourceManager at /0.0.0.0:8032
+22/02/20 14:37:05 INFO mapred.FileInputFormat: Total input paths to process : 2
+22/02/20 14:37:05 INFO mapreduce.JobSubmitter: number of splits:3
+22/02/20 14:37:05 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1645364657674_0006
+22/02/20 14:37:05 INFO impl.YarnClientImpl: Submitted application application_1645364657674_0006
+22/02/20 14:37:05 INFO mapreduce.Job: The url to track the job: http://quickstart.cloudera:8088/proxy/application_1645364657674_0006/
+22/02/20 14:37:05 INFO mapreduce.Job: Running job: job_1645364657674_0006
+22/02/20 14:37:10 INFO mapreduce.Job: Job job_1645364657674_0006 running in uber mode : false
+22/02/20 14:37:10 INFO mapreduce.Job:  map 0% reduce 0%
+22/02/20 14:37:14 INFO mapreduce.Job:  map 33% reduce 0%
+22/02/20 14:37:15 INFO mapreduce.Job:  map 67% reduce 0%
+22/02/20 14:37:16 INFO mapreduce.Job:  map 100% reduce 0%
+22/02/20 14:37:20 INFO mapreduce.Job:  map 100% reduce 50%
+22/02/20 14:37:21 INFO mapreduce.Job:  map 100% reduce 100%
+22/02/20 14:37:21 INFO mapreduce.Job: Job job_1645364657674_0006 completed successfully
+22/02/20 14:37:21 INFO mapreduce.Job: Counters: 49
+	File System Counters
+		FILE: Number of bytes read=142
+		FILE: Number of bytes written=578442
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=415
+		HDFS: Number of bytes written=94
+		HDFS: Number of read operations=15
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=4
+	Job Counters 
+		Launched map tasks=3
+		Launched reduce tasks=2
+		Data-local map tasks=3
+		Total time spent by all maps in occupied slots (ms)=6267
+		Total time spent by all reduces in occupied slots (ms)=4363
+		Total time spent by all map tasks (ms)=6267
+		Total time spent by all reduce tasks (ms)=4363
+		Total vcore-seconds taken by all map tasks=6267
+		Total vcore-seconds taken by all reduce tasks=4363
+		Total megabyte-seconds taken by all map tasks=6417408
+		Total megabyte-seconds taken by all reduce tasks=4467712
+	Map-Reduce Framework
+		Map input records=2
+		Map output records=15
+		Map output bytes=100
+		Map output materialized bytes=166
+		Input split bytes=339
+		Combine input records=0
+		Combine output records=0
+		Reduce input groups=14
+		Reduce shuffle bytes=166
+		Reduce input records=15
+		Reduce output records=14
+		Spilled Records=30
+		Shuffled Maps =6
+		Failed Shuffles=0
+		Merged Map outputs=6
+		GC time elapsed (ms)=93
+		CPU time spent (ms)=2460
+		Physical memory (bytes) snapshot=1122250752
+		Virtual memory (bytes) snapshot=6866968576
+		Total committed heap usage (bytes)=1161297920
+	Shuffle Errors
+		BAD_ID=0
+		CONNECTION=0
+		IO_ERROR=0
+		WRONG_LENGTH=0
+		WRONG_MAP=0
+		WRONG_REDUCE=0
+	File Input Format Counters 
+		Bytes Read=76
+	File Output Format Counters 
+		Bytes Written=94
+22/02/20 14:37:21 INFO streaming.StreamJob: Output directory: /user/cloudera/output_new_1
+[root@quickstart /]#  hdfs dfs -cat /user/cloudera/output_new_1/part-00000
+A	1
+Another	1
+Wars	1
+a	1
+ago	1
+episode	1
+far	2
+in	1
+of	1
+time	1
