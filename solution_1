@@ -1,4 +1,4 @@
-                          [  OK  ]
+
 [root@quickstart /]# touch wordcount_mapper.py
 [root@quickstart /]# vim wordcount_mapper.py
 [root@quickstart /]# touch wordcount_reducer.py
